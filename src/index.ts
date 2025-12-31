@@ -28,7 +28,6 @@ export function initSliders() {
   destroySliders();
 
   const sliders = document.querySelectorAll<HTMLElement>(`[yc-slider-component]`);
-  // console.log(sliders);
   sliders.forEach((e, index) => {
     const wrapper = e.querySelector<HTMLElement>(`[yc-slider-element='wrapper']`);
     const list = e.querySelector<HTMLElement>(`[yc-slider-element='list']`);
@@ -45,7 +44,9 @@ export function initSliders() {
     interface SwiperWithRefresh extends Swiper {
       refreshClassName?: () => void;
     }
+
     let swiperInstance: SwiperWithRefresh;
+
     if (!list.getAttribute('yc-slider-init')) {
       swiperInstance = new Swiper(wrapper, swiperParams);
     };
@@ -61,8 +62,6 @@ export function initSliders() {
       swiperInstance = new Swiper(wrapper, swiperParams);
     }
 
-    // console.log(swiperInstance);
-
     if (swiperInstance) {
       swiperInstance.refreshClassName = function () {
         let list = document.querySelector(`.${swiperInstance.params.wrapperClass}`);
@@ -75,11 +74,8 @@ export function initSliders() {
         control: controller,
       };
     }
-
     if (list.getAttribute('yc-slider-filter')) {
-      if (swiperInstance) {
-        initializeSwiperObserver(swiperInstance, list);
-      }
+      initializeSwiperObserver(swiperInstance, list);
     }
   });
 
@@ -89,8 +85,8 @@ export function initSliders() {
 
 
   window.ycAttributes = window.ycAttributes || {};
-  window.ycAttributes.sliders = sliderInstances;
-  window.ycAttributes.initFunction = initSliders
+  window.ycAttributes!.sliders = sliderInstances;
+  window.ycAttributes!.initFunction = initSliders
 
   if (window.ycAttributes && window.ycAttributes.sliders) {
     const sliderKeys = Object.keys(window.ycAttributes.sliders);

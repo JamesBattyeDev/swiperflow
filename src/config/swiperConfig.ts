@@ -25,6 +25,7 @@ import { getPaginationParams } from './paginationConfig';
  * @param {HTMLElement} wrapper - The wrapper element for the Swiper.
  * @param {HTMLElement} list - The list element containing the slides.
  * @param {NodeListOf<HTMLElement>} item - The individual slide elements.
+ * @param {Boolean} controller - Does swiper have a controller?.
  * @returns {SwiperOptions} - The configuration object for Swiper.
  */
 export function getSwiperConfig(
