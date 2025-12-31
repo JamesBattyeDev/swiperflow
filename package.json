@@ -1,20 +1,20 @@
 {
-  "name": "@yes-chef/yes-chef-sliders",
-  "version": "2.0.13",
-  "description": "OS Project for YC Webflow Slider.",
-  "homepage": "https://github.com/yes-chef/yes-chef-sliders#readme",
+  "name": "@james-battye/swiperflow",
+  "version": "0.0.1",
+  "description": "Swiper ported to attributes for Webflow",
+  "homepage": "https://github.com/james-battye/swiperflow#readme",
   "license": "ISC",
   "keywords": [],
   "author": {
-    "name": "yes-chef",
-    "url": "https://yes-chef.com/"
+    "name": "jamesbattye",
+    "url": "https://jamesbattye.dev/"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/yes-chef/yes-chef-sliders.git"
+    "url": "git+https://github.com/james-battye/swiperflow.git"
   },
   "bugs": {
-    "url": "https://github.com/yes-chef/yes-chef-sliders/issues"
+    "url": "https://github.com/james-battye/swiperflow/issues"
   },
   "type": "module",
   "main": "src/index.ts",

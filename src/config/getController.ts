@@ -1,20 +1,24 @@
+import { logger } from '../helpers/logger';
+
 export function getController(list: HTMLElement) {
-  // Check if the list element has the 'yc-controller-pair' attribute
-  const pairValue = list.getAttribute('yc-controller-pair');
+  // Check if the list element has the 'swf-ctrl-pair' attribute
+  const pairValue = list.dataset.swfCtrlPair;
 
   if (!pairValue) {
     return null; // Return null if the attribute doesn't exist
   }
 
-  // Search the page for all elements with 'yc-controller-pair' attribute
-  const allPairElements = document.querySelectorAll('[yc-controller-pair]');
+  // Search the page for all elements with 'swf-ctrl-pair' attribute
+  const allPairElements = document.querySelectorAll('[swf-ctrl-pair]');
 
   // Find the matching element (excluding the input element)
   for (const element of allPairElements) {
-    if (element !== list && element.getAttribute('yc-controller-pair') === pairValue) {
-      element.classList.add(`controller-side-one-${element.getAttribute('yc-controller-id')}`);
-      console.log(`.controller-side-one-${element.getAttribute('yc-controller-id')}`);
-      return `.controller-side-one-${element.getAttribute('yc-controller-id')}`;
+    const htmlElement = element as HTMLElement;
+    if (element !== list && htmlElement.dataset.swfCtrlPair === pairValue) {
+      const ctrlId = htmlElement.dataset.swfCtrlId;
+      element.classList.add(`controller-side-one-${ctrlId}`);
+      logger.log(`Controller class: .controller-side-one-${ctrlId}`);
+      return `.controller-side-one-${ctrlId}`;
     }
   }
 

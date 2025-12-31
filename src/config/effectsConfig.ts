@@ -1,3 +1,5 @@
+import { parseStringAttr } from '../helpers/attributeParser';
+
 /**
  * Generates the effects parameters for a Swiper instance based on the provided list element.
  *
@@ -10,19 +12,18 @@ export function getEffectsParams(list: HTMLElement) {
     effects: 'none',
   };
 
-  // Check if the 'yc-slider-effect' attribute is set to 'fade'
-  if (list.getAttribute('yc-slider-effect') === 'fade') {
+  const effectAttr = parseStringAttr(list, 'effect', '');
+
+  // Check if the effect attribute is set to 'fade'
+  if (effectAttr === 'fade') {
     effects.effects = 'fade';
     effects.fadeEffect = {
       crossFade: true,
     };
   }
 
-  // Check if the 'yc-slider-effect' attribute is set to 'cards' or 'card'
-  if (
-    list.getAttribute('yc-slider-effect') === 'cards' ||
-    list.getAttribute('yc-slider-effect') === 'card'
-  ) {
+  // Check if the effect attribute is set to 'cards' or 'card'
+  if (effectAttr === 'cards' || effectAttr === 'card') {
     effects.effects = 'cards';
     effects.cardEffect = {
       perSlideOffset: 64,
@@ -31,8 +32,8 @@ export function getEffectsParams(list: HTMLElement) {
     };
   }
 
-  // Check if the 'yc-slider-effect' attribute is set to 'creative'
-  if (list.getAttribute('yc-slider-effect') === 'creative') {
+  // Check if the effect attribute is set to 'creative'
+  if (effectAttr === 'creative') {
     effects.effects = 'creative';
     effects.creativeEffect = {
       next: {
@@ -46,8 +47,8 @@ export function getEffectsParams(list: HTMLElement) {
     };
   }
 
-  // Check if the 'yc-slider-effect' attribute is set to 'creative-flat'
-  if (list.getAttribute('yc-slider-effect') === 'creative-flat') {
+  // Check if the effect attribute is set to 'creative-flat'
+  if (effectAttr === 'creative-flat') {
     effects.effects = 'creative';
     effects.creativeEffect = {
       next: {

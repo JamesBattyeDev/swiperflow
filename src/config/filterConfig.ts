@@ -1,4 +1,4 @@
-import type Swiper from 'swiper';
+import type { SwiperWithRefresh } from 'src/types/SwiperWithRefresh';
 
 /**
  * Initializes a MutationObserver to monitor changes in the child elements of a given list.
@@ -7,7 +7,7 @@ import type Swiper from 'swiper';
  * @param swiper - The Swiper instance to update.
  * @param list - The HTML element (list) to observe for mutations.
  */
-export const initializeSwiperObserver = (swiper: Swiper, list: HTMLElement) => {
+export const initializeSwiperObserver = (swiper: SwiperWithRefresh, list: HTMLElement) => {
   // Store the initial number of child elements in the list
   let initialChildCount = list.children.length;
 
