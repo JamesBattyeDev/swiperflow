@@ -11,9 +11,9 @@ export function getNavigationParams(component: HTMLElement) {
   let navigationParams = {};
 
   // Check if the component contains a navigation element
-  if (component.querySelector("[swf-element='navigation']")) {
+  if (component.querySelector("[data-swf-element='navigation']")) {
     // Select the navigation element
-    const nav = component.querySelector<HTMLElement>(`[swf-element='navigation']`);
+    const nav = component.querySelector<HTMLElement>(`[data-swf-element='navigation']`);
     if (!nav) {
       // Log an error if the navigation element is not found
       logger.error('No nav wrapper element on the page.');
@@ -21,7 +21,7 @@ export function getNavigationParams(component: HTMLElement) {
     }
 
     // Select the next arrow element within the navigation element
-    const nextArrow = nav.querySelector<HTMLElement>(`[swf-element='next-arrow']`);
+    const nextArrow = nav.querySelector<HTMLElement>(`[data-swf-element='next-arrow']`);
     if (!nextArrow) {
       // Log an error if the next arrow element is not found
       logger.error('No nextArrow element found.');
@@ -29,7 +29,7 @@ export function getNavigationParams(component: HTMLElement) {
     }
 
     // Select the previous arrow element within the navigation element
-    const prevArrow = nav.querySelector<HTMLElement>(`[swf-element='prev-arrow']`);
+    const prevArrow = nav.querySelector<HTMLElement>(`[data-swf-element='prev-arrow']`);
     if (!prevArrow) {
       // Log an error if the previous arrow element is not found
       logger.error('No prevArrow element found.');

@@ -4,6 +4,7 @@ import { getSwiperConfig } from './config/swiperConfig';
 import { getFirstWord } from '$utils/getClassName';
 import { debounce } from './helpers/debounce';
 import type { SwiperWithRefresh } from './types/SwiperWithRefresh';
+import { logger } from '$utils/logger';
 
 // Extend the Window interface to include swiperflow
 declare global {
@@ -39,37 +40,65 @@ export function initSliders() {
 
   destroySliders();
 
-  const sliders = document.querySelectorAll<HTMLElement>(`[swf-component]`);
+  const sliders = document.querySelectorAll<HTMLElement>(`[data-swf-component]`);
+  logger.log(`\n\n***** Found ${sliders.length} slider(s) on the page *****\n`);
+
   sliders.forEach((e, index) => {
-    const wrapper = e.querySelector<HTMLElement>(`[swf-element='wrapper']`);
-    const list = e.querySelector<HTMLElement>(`[swf-element='list']`);
-    const item = e.querySelectorAll<HTMLElement>(`[swf-element='item']`);
+    logger.log(`\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`);
+    logger.log(`INITIALIZING SLIDER #${index + 1}`);
+    logger.log(`━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n`);
 
-    if (!wrapper || !list || !item) return;
+    const wrapper = e.querySelector<HTMLElement>(`[data-swf-element='wrapper']`);
+    const list = e.querySelector<HTMLElement>(`[data-swf-element='list']`);
+    const item = e.querySelectorAll<HTMLElement>(`[data-swf-element='item']`);
 
-    if (item.length < 1 && !list.dataset.swfDisabled) return;
+    logger.log('Found elements:');
+    logger.log('  wrapper:', wrapper ? '✓' : '✗');
+    logger.log('  list:', list ? '✓' : '✗');
+    logger.log('  items:', item?.length || 0);
+
+    if (!wrapper || !list || !item) {
+      logger.log('❌ Missing required elements, skipping this slider');
+      return;
+    }
+
+    if (item.length < 1 && !list.dataset.swfDisabled) {
+      logger.log('❌ No items found and not disabled, skipping this slider');
+      return;
+    }
 
     const controller = list.dataset.swfCtrlRole === 'controller';
+    logger.log('Is controller:', controller);
 
     const swiperParams = getSwiperConfig(e, wrapper, list, item, controller);
 
     let swiperInstance: SwiperWithRefresh | null = null;
 
-    if (!list.dataset.swfInit) {
-      swiperInstance = new Swiper(wrapper, swiperParams);
-    };
-
     const width = window.innerWidth;
     const initValue = list.dataset.swfInit;
-    if (initValue?.includes('desktop') && width > 992) {
+
+    logger.log('\n--- Conditional Initialization Check ---');
+    logger.log('Window width:', width);
+    logger.log('swfInit value:', initValue || 'none (initialize always)');
+
+    if (!list.dataset.swfInit) {
+      logger.log('✓ No swfInit restriction, initializing Swiper');
+      swiperInstance = new Swiper(wrapper, swiperParams);
+    } else if (initValue?.includes('desktop') && width > 992) {
+      logger.log('✓ Desktop init condition met, initializing Swiper');
       swiperInstance = new Swiper(wrapper, swiperParams);
     } else if (initValue?.includes('tablet') && width > 568 && width <= 991) {
+      logger.log('✓ Tablet init condition met, initializing Swiper');
       swiperInstance = new Swiper(wrapper, swiperParams);
     } else if (initValue?.includes('mobile') && width >= 320 && width <= 568) {
+      logger.log('✓ Mobile init condition met, initializing Swiper');
       swiperInstance = new Swiper(wrapper, swiperParams);
+    } else {
+      logger.log('✗ Init conditions not met, NOT initializing Swiper');
     }
 
     if (swiperInstance) {
+      logger.log('✓ Swiper instance created successfully');
       swiperInstance.refreshClassName = function () {
         let list = document.querySelector(`.${swiperInstance.params.wrapperClass}`);
         let item = list?.firstChild as HTMLElement;
@@ -126,6 +155,8 @@ export function initSliders() {
     window.swiperflow.init = initSliders;
   }
 
+  logger.log(sliderInstances)
+
   // controller logic
   if (window.swiperflow && window.swiperflow.sliders) {
     const sliderKeys = Object.keys(window.swiperflow.sliders);
@@ -134,7 +165,7 @@ export function initSliders() {
       const key = sliderKeys[i];
       const slider = window.swiperflow.sliders[key];
       if (slider.control) {
-        const allPairElements = document.querySelectorAll('[swf-ctrl-pair]');
+        const allPairElements = document.querySelectorAll('[data-swf-ctrl-pair]');
         const controls = [];
         for (const element of allPairElements) {
           const htmlElement = element as HTMLElement;

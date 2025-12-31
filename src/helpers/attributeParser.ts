@@ -9,6 +9,8 @@
  * Usage: parseNumberAttr(element, 'speed', 400) // returns 600
  */
 
+import { logger } from "./logger";
+
 /**
  * Capitalize the first letter of a string
  * @param str - String to capitalize
@@ -34,9 +36,16 @@ export function parseBooleanAttr(
   key: string,
   defaultValue: boolean = false
 ): boolean {
-  const value = element.dataset[`swf${capitalize(key)}`];
-  if (value === undefined) return defaultValue;
-  return value === 'true';
+  const datasetKey = `swf${capitalize(key)}`;
+  const value = element.dataset[datasetKey];
+  logger.log(`parseBooleanAttr: key="${key}", datasetKey="${datasetKey}", value="${value}", default="${defaultValue}"`);
+  if (value === undefined) {
+    logger.log(`  → undefined, returning default: ${defaultValue}`);
+    return defaultValue;
+  }
+  const result = value === 'true';
+  logger.log(`  → parsed to: ${result}`);
+  return result;
 }
 
 /**
@@ -55,10 +64,17 @@ export function parseNumberAttr(
   key: string,
   defaultValue: number = 0
 ): number {
-  const value = element.dataset[`swf${capitalize(key)}`];
-  if (value === undefined) return defaultValue;
+  const datasetKey = `swf${capitalize(key)}`;
+  const value = element.dataset[datasetKey];
+  logger.log(`parseNumberAttr: key="${key}", datasetKey="${datasetKey}", value="${value}", default="${defaultValue}"`);
+  if (value === undefined) {
+    logger.log(`  → undefined, returning default: ${defaultValue}`);
+    return defaultValue;
+  }
   const parsed = parseInt(value, 10);
-  return isNaN(parsed) ? defaultValue : parsed;
+  const result = isNaN(parsed) ? defaultValue : parsed;
+  logger.log(`  → parsed to: ${result} (isNaN: ${isNaN(parsed)})`);
+  return result;
 }
 
 /**
@@ -77,7 +93,11 @@ export function parseStringAttr(
   key: string,
   defaultValue: string = ''
 ): string {
-  return element.dataset[`swf${capitalize(key)}`] ?? defaultValue;
+  const datasetKey = `swf${capitalize(key)}`;
+  const value = element.dataset[datasetKey];
+  const result = value ?? defaultValue;
+  logger.log(`parseStringAttr: key="${key}", datasetKey="${datasetKey}", value="${value}", default="${defaultValue}", result="${result}"`);
+  return result;
 }
 
 /**
@@ -99,9 +119,19 @@ export function parseStringOrNumberAttr(
   key: string,
   defaultValue: string | number = 1
 ): string | number {
-  const value = element.dataset[`swf${capitalize(key)}`];
-  if (value === undefined) return defaultValue;
-  if (value === 'auto') return 'auto';
+  const datasetKey = `swf${capitalize(key)}`;
+  const value = element.dataset[datasetKey];
+  logger.log(`parseStringOrNumberAttr: key="${key}", datasetKey="${datasetKey}", value="${value}", default="${defaultValue}"`);
+  if (value === undefined) {
+    logger.log(`  → undefined, returning default: ${defaultValue}`);
+    return defaultValue;
+  }
+  if (value === 'auto') {
+    logger.log(`  → returning "auto"`);
+    return 'auto';
+  }
   const parsed = parseInt(value, 10);
-  return isNaN(parsed) ? defaultValue : parsed;
+  const result = isNaN(parsed) ? defaultValue : parsed;
+  logger.log(`  → parsed to: ${result} (isNaN: ${isNaN(parsed)})`);
+  return result;
 }

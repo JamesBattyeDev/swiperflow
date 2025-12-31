@@ -23,6 +23,7 @@ import { getDirection } from './directionConfig';
 import { getEffectsParams } from './effectsConfig';
 import { getNavigationParams } from './navigationConfig';
 import { getPaginationParams } from './paginationConfig';
+import { logger } from '../helpers/logger';
 
 // Default configuration values
 const DEFAULTS = {
@@ -56,26 +57,48 @@ export function getSwiperConfig(
   item: NodeListOf<HTMLElement>,
   controller: boolean
 ): SwiperOptions {
+  logger.log('==================== getSwiperConfig START ====================');
+  logger.log('List element:', list);
+  logger.log('List dataset (all attributes):', list.dataset);
+  logger.log('List dataset keys:', Object.keys(list.dataset));
+
   // Retrieve attribute-based configurations
+  logger.log('\n--- Parsing Navigation ---');
   const navigationParams = getNavigationParams(element);
+
+  logger.log('\n--- Parsing Pagination ---');
   const paginationParams = getPaginationParams(element);
+
+  logger.log('\n--- Parsing Autoplay ---');
   const autoplayParams = getAutoplayParams(list);
+
+  logger.log('\n--- Parsing Effects ---');
   const effectsParams = getEffectsParams(list);
+
+  logger.log('\n--- Parsing Breakpoints ---');
   const breakpointParams = getBreakpointParams(list);
+
+  logger.log('\n--- Parsing Direction ---');
   const directionParams = getDirection(list);
 
   // Get list, wrapper and item classes
   const itemClass = getFirstWord(item[0]);
   const listClass = getFirstWord(list);
 
+  logger.log('\n--- CSS Classes ---');
+  logger.log('itemClass:', itemClass);
+  logger.log('listClass:', listClass);
+
   // Duplicate slides if the attribute 'swf-double' is present
   if (list.dataset.swfDouble) {
+    logger.log('\n--- Duplicating slides (swfDouble present) ---');
     item.forEach((item) => {
       const clone = item.cloneNode(true) as HTMLElement;
       list.appendChild(clone);
     });
   }
 
+  logger.log('\n--- Parsing Core Attributes ---');
   // Setting Swiper Parameters
   const swiperParams: SwiperOptions = {
     // Include Swiper modules
@@ -197,6 +220,30 @@ export function getSwiperConfig(
   if (effectsParams.effects === 'creative') {
     swiperParams.creativeEffect = effectsParams.creativeEffect;
   }
+
+  // Log the complete configuration
+  logger.log('\n==================== FINAL CONFIGURATION ====================');
+  logger.log('Element:', element);
+  logger.log('\nParsed Settings:');
+  logger.log('  speed:', swiperParams.speed);
+  logger.log('  spaceBetween:', swiperParams.spaceBetween, '← THIS IS THE GAP');
+  logger.log('  slidesPerView:', swiperParams.slidesPerView);
+  logger.log('  loop:', swiperParams.loop);
+  logger.log('  direction:', swiperParams.direction);
+  logger.log('  initialSlide:', swiperParams.initialSlide);
+  logger.log('  loopAdditionalSlides:', swiperParams.loopAdditionalSlides);
+  logger.log('  slideActiveClass:', swiperParams.slideActiveClass);
+  logger.log('  centeredSlides:', swiperParams.centeredSlides);
+  logger.log('  grabCursor:', swiperParams.grabCursor);
+  logger.log('  allowTouchMove:', swiperParams.allowTouchMove);
+  logger.log('  simulateTouch:', swiperParams.simulateTouch);
+  logger.log('  effect:', swiperParams.effect);
+  logger.log('  autoplay:', swiperParams.autoplay);
+  logger.log('  breakpoints:', swiperParams.breakpoints);
+  logger.log('  navigation:', navigationParams);
+  logger.log('  pagination:', paginationParams);
+  logger.log('\nRaw Dataset:', list.dataset);
+  logger.log('==================== getSwiperConfig END ====================\n\n');
 
   return swiperParams;
 }

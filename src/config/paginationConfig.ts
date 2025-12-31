@@ -12,10 +12,10 @@ export function getPaginationParams(component: HTMLElement) {
   let paginationParams = {};
 
   // Check if the component contains a pagination element
-  if (component.querySelector("[swf-element='pagination']")) {
+  if (component.querySelector("[data-swf-element='pagination']")) {
     // Select the pagination element
     const paginationElement = component.querySelector<HTMLElement>(
-      `[swf-element='pagination']`
+      `[data-swf-element='pagination']`
     );
     if (!paginationElement) {
       // Log an error if the pagination element is not found
@@ -25,7 +25,7 @@ export function getPaginationParams(component: HTMLElement) {
 
     // Select the pagination dot element within the pagination element
     const paginationDot = paginationElement?.querySelector<HTMLElement>(
-      "[swf-element='pagination-dot']"
+      "[data-swf-element='pagination-dot']"
     );
     if (!paginationDot) {
       // Log an error if the pagination dot element is not found
