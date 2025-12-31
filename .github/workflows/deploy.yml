@@ -30,6 +30,7 @@ jobs:
         if: github.ref == 'refs/heads/main'
         uses: cloudflare/wrangler-action@v3
         with:
+          packageManager: bun
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           command: pages deploy dist --project-name=${{ secrets.CLOUDFLARE_PROJECT_NAME }} --branch=main
@@ -38,6 +39,7 @@ jobs:
         if: github.ref == 'refs/heads/development'
         uses: cloudflare/wrangler-action@v3
         with:
+          packageManager: bun
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           command: pages deploy dist --project-name=${{ secrets.CLOUDFLARE_PROJECT_NAME }} --branch=development
