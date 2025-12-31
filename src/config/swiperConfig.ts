@@ -5,6 +5,7 @@ import {
   EffectCards,
   EffectCreative,
   EffectFade,
+  Keyboard,
   Navigation,
   Pagination,
 } from 'swiper/modules';
@@ -20,7 +21,9 @@ import {
 import { getAutoplayParams } from './autoplayConfig';
 import { getBreakpointParams } from './breakpointConfig';
 import { getDirection } from './directionConfig';
+import { applyEasingConfig } from './easingConfig';
 import { getEffectsParams } from './effectsConfig';
+import { getKeyboardParams } from './keyboardConfig';
 import { getNavigationParams } from './navigationConfig';
 import { getPaginationParams } from './paginationConfig';
 import { logger } from '../helpers/logger';
@@ -72,6 +75,9 @@ export function getSwiperConfig(
   logger.log('\n--- Parsing Autoplay ---');
   const autoplayParams = getAutoplayParams(list);
 
+  logger.log('\n--- Parsing Keyboard ---');
+  const keyboardParams = getKeyboardParams(list);
+
   logger.log('\n--- Parsing Effects ---');
   const effectsParams = getEffectsParams(list);
 
@@ -80,6 +86,9 @@ export function getSwiperConfig(
 
   logger.log('\n--- Parsing Direction ---');
   const directionParams = getDirection(list);
+
+  logger.log('\n--- Applying Easing ---');
+  applyEasingConfig(wrapper, list);
 
   // Get list, wrapper and item classes
   const itemClass = getFirstWord(item[0]);
@@ -106,6 +115,7 @@ export function getSwiperConfig(
       Navigation,
       Pagination,
       Autoplay,
+      Keyboard,
       EffectFade,
       Controller,
       EffectCards,
@@ -154,6 +164,9 @@ export function getSwiperConfig(
 
     // Autoplay parameters
     autoplay: autoplayParams,
+
+    // Keyboard parameters
+    keyboard: keyboardParams,
 
     // Breakpoint parameters for responsive design
     breakpoints: breakpointParams,
@@ -239,9 +252,11 @@ export function getSwiperConfig(
   logger.log('  simulateTouch:', swiperParams.simulateTouch);
   logger.log('  effect:', swiperParams.effect);
   logger.log('  autoplay:', swiperParams.autoplay);
+  logger.log('  keyboard:', swiperParams.keyboard);
   logger.log('  breakpoints:', swiperParams.breakpoints);
   logger.log('  navigation:', navigationParams);
   logger.log('  pagination:', paginationParams);
+  logger.log('  easing:', wrapper.style.getPropertyValue('--swiper-wrapper-transition-timing-function') || 'default');
   logger.log('\nRaw Dataset:', list.dataset);
   logger.log('==================== getSwiperConfig END ====================\n\n');
 
