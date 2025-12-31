@@ -1,3 +1,5 @@
+import { logger } from '../helpers/logger';
+
 /**
  * Retrieves navigation parameters for a given component.
  *
@@ -9,28 +11,28 @@ export function getNavigationParams(component: HTMLElement) {
   let navigationParams = {};
 
   // Check if the component contains a navigation element
-  if (component.querySelector("[yc-slider-element='navigation']")) {
+  if (component.querySelector("[swf-element='navigation']")) {
     // Select the navigation element
-    const nav = component.querySelector<HTMLElement>(`[yc-slider-element='navigation']`);
+    const nav = component.querySelector<HTMLElement>(`[swf-element='navigation']`);
     if (!nav) {
       // Log an error if the navigation element is not found
-      console.error('No nav wrapper element on the page.');
+      logger.error('No nav wrapper element on the page.');
       return {};
     }
 
     // Select the next arrow element within the navigation element
-    const nextArrow = nav.querySelector<HTMLElement>(`[yc-slider-element='next-arrow']`);
+    const nextArrow = nav.querySelector<HTMLElement>(`[swf-element='next-arrow']`);
     if (!nextArrow) {
       // Log an error if the next arrow element is not found
-      console.error('no nextArrow');
+      logger.error('No nextArrow element found.');
       return {};
     }
 
     // Select the previous arrow element within the navigation element
-    const prevArrow = nav.querySelector<HTMLElement>(`[yc-slider-element='prev-arrow']`);
+    const prevArrow = nav.querySelector<HTMLElement>(`[swf-element='prev-arrow']`);
     if (!prevArrow) {
       // Log an error if the previous arrow element is not found
-      console.error('no prevArrow');
+      logger.error('No prevArrow element found.');
       return {};
     }
 

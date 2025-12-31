@@ -1,4 +1,5 @@
 import { getFirstWord } from '../helpers/getClassName';
+import { logger } from '../helpers/logger';
 
 /**
  * Generates pagination parameters for a given component.
@@ -11,24 +12,24 @@ export function getPaginationParams(component: HTMLElement) {
   let paginationParams = {};
 
   // Check if the component contains a pagination element
-  if (component.querySelector("[yc-slider-element='pagination']")) {
+  if (component.querySelector("[swf-element='pagination']")) {
     // Select the pagination element
     const paginationElement = component.querySelector<HTMLElement>(
-      `[yc-slider-element='pagination']`
+      `[swf-element='pagination']`
     );
     if (!paginationElement) {
       // Log an error if the pagination element is not found
-      console.error('no paginationElement');
+      logger.error('No paginationElement found.');
       return {};
     }
 
     // Select the pagination dot element within the pagination element
     const paginationDot = paginationElement?.querySelector<HTMLElement>(
-      "[yc-slider-element='pagination-dot']"
+      "[swf-element='pagination-dot']"
     );
     if (!paginationDot) {
       // Log an error if the pagination dot element is not found
-      console.error('no paginationDot');
+      logger.error('No paginationDot element found.');
       return {};
     }
 

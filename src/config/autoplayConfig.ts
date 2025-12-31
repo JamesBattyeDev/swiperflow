@@ -1,3 +1,11 @@
+import { parseBooleanAttr, parseNumberAttr } from '../helpers/attributeParser';
+
+// Default configuration values
+const DEFAULTS = {
+  enabled: false,
+  delay: 4000,
+} as const;
+
 /**
  * Retrieves autoplay parameters from a given HTML element.
  *
@@ -5,22 +13,16 @@
  * @returns {Object} An object containing autoplay parameters.
  */
 export function getAutoplayParams(list: HTMLElement) {
-  let autoplayParams = {};
+  const enabled = parseBooleanAttr(list, 'autoplay', DEFAULTS.enabled);
 
-  // Check if the 'yc-slider-autoplay' attribute is present
-  if (list.getAttribute('yc-slider-autoplay') === "true") {
-    // If present, enable autoplay and set the delay
-    autoplayParams = {
+  if (enabled) {
+    return {
       enabled: true,
-      // Parse the delay attribute or default to 4000ms
-      delay: parseInt(list.getAttribute('yc-slider-autoplay-delay') || '4000') || 4000,
-    };
-  } else {
-    // If not present, disable autoplay
-    autoplayParams = {
-      enabled: false,
+      delay: parseNumberAttr(list, 'autoplayDelay', DEFAULTS.delay),
     };
   }
 
-  return autoplayParams;
+  return {
+    enabled: false,
+  };
 }

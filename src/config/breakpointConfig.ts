@@ -1,4 +1,10 @@
 import type { SwiperOptions } from 'swiper/types/swiper-options';
+import { parseStringOrNumberAttr } from '../helpers/attributeParser';
+
+// Default configuration values
+const DEFAULTS = {
+  slidesPerView: 1,
+} as const;
 
 /**
  * Generates Swiper breakpoint parameters based on custom attributes of the provided HTML element.
@@ -9,34 +15,23 @@ export function getBreakpointParams(list: HTMLElement): SwiperOptions['breakpoin
   const breakpointParams: SwiperOptions['breakpoints'] = {};
 
   // Check for desktop breakpoint attribute and set the corresponding Swiper option
-  if (list.getAttribute('yc-slider-breakpoint-desktop')) {
-
+  if (list.dataset.swfBpDesktop) {
     breakpointParams['991'] = {
-      slidesPerView:
-        list.getAttribute('yc-slider-breakpoint-desktop') === 'auto'
-          ? 'auto'
-          : parseInt(list.getAttribute('yc-slider-breakpoint-desktop') || '1') || 1,
+      slidesPerView: parseStringOrNumberAttr(list, 'bpDesktop', DEFAULTS.slidesPerView),
     };
   }
 
   // Check for tablet breakpoint attribute and set the corresponding Swiper option
-  if (list.getAttribute('yc-slider-breakpoint-tablet')) {
+  if (list.dataset.swfBpTablet) {
     breakpointParams['568'] = {
-      slidesPerView:
-        list.getAttribute('yc-slider-breakpoint-tablet') === 'auto'
-          ? 'auto'
-          : parseInt(list.getAttribute('yc-slider-breakpoint-tablet') || '1') || 1,
+      slidesPerView: parseStringOrNumberAttr(list, 'bpTablet', DEFAULTS.slidesPerView),
     };
   }
 
   // Check for mobile breakpoint attribute and set the corresponding Swiper option
-  if (list.getAttribute('yc-slider-breakpoint-mobile')) {
-
+  if (list.dataset.swfBpMobile) {
     breakpointParams['320'] = {
-      slidesPerView:
-        list.getAttribute('yc-slider-breakpoint-mobile') === 'auto'
-          ? 'auto'
-          : parseInt(list.getAttribute('yc-slider-breakpoint-mobile') || '1') || 1,
+      slidesPerView: parseStringOrNumberAttr(list, 'bpMobile', DEFAULTS.slidesPerView),
     };
   }
 

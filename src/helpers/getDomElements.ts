@@ -1,24 +1,26 @@
+import { logger } from './logger';
+
 export function domElements(element: HTMLDivElement) {
   const domElements = {
-    wrapper: element.querySelector<HTMLElement>(`[yc-slider-element='wrapper']`),
-    list: element.querySelector<HTMLElement>(`[yc-slider-element='list']`),
-    item: element.querySelectorAll<HTMLElement>(`[yc-slider-element='item']`),
+    wrapper: element.querySelector<HTMLElement>(`[swf-element='wrapper']`),
+    list: element.querySelector<HTMLElement>(`[swf-element='list']`),
+    item: element.querySelectorAll<HTMLElement>(`[swf-element='item']`),
   };
 
   // Error Handling
   if (!domElements.wrapper) {
-    return console.error(
-      'Error: The wrapper element could not be found. Please ensure that an element with [yc-slider-element="wrapper"] exists.'
+    return logger.error(
+      'Error: The wrapper element could not be found. Please ensure that an element with [swf-element="wrapper"] exists.'
     );
   }
   if (!domElements.list) {
-    return console.error(
-      'Error: The list element could not be found. Please ensure that an element with [yc-slider-element="list"] exists.'
+    return logger.error(
+      'Error: The list element could not be found. Please ensure that an element with [swf-element="list"] exists.'
     );
   }
   if (!domElements.item) {
-    return console.error(
-      'Error: The item element could not be found. Please ensure that an element with [yc-slider-element="item"] exists.'
+    return logger.error(
+      'Error: The item element could not be found. Please ensure that an element with [swf-element="item"] exists.'
     );
   }
 }

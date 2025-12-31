@@ -2,13 +2,14 @@ import { Swiper } from 'swiper';
 import { initializeSwiperObserver } from './config/filterConfig';
 import { getSwiperConfig } from './config/swiperConfig';
 import { getFirstWord } from '$utils/getClassName';
+import { debounce } from './helpers/debounce';
 
-// Extend the Window interface to include ycAttributes
+// Extend the Window interface to include swiperflow
 declare global {
   interface Window {
-    ycAttributes?: {
+    swiperflow?: {
       sliders?: { [key: string]: { swiper: Swiper; control: boolean } };
-      initFunction: any
+      init: () => void;
     };
   }
 }
@@ -24,20 +25,30 @@ function destroySliders() {
   sliderInstances = {};
 }
 
+// Helper function to detect active breakpoint
+function getActiveBreakpoint(): 'desktop' | 'tablet' | 'mobile' {
+  const width = window.innerWidth;
+  if (width > 991) return 'desktop';
+  if (width > 568) return 'tablet';
+  return 'mobile';
+}
+
 export function initSliders() {
+  const isReinitialize = Object.keys(sliderInstances).length > 0;
+
   destroySliders();
 
-  const sliders = document.querySelectorAll<HTMLElement>(`[yc-slider-component]`);
+  const sliders = document.querySelectorAll<HTMLElement>(`[swf-component]`);
   sliders.forEach((e, index) => {
-    const wrapper = e.querySelector<HTMLElement>(`[yc-slider-element='wrapper']`);
-    const list = e.querySelector<HTMLElement>(`[yc-slider-element='list']`);
-    const item = e.querySelectorAll<HTMLElement>(`[yc-slider-element='item']`);
+    const wrapper = e.querySelector<HTMLElement>(`[swf-element='wrapper']`);
+    const list = e.querySelector<HTMLElement>(`[swf-element='list']`);
+    const item = e.querySelectorAll<HTMLElement>(`[swf-element='item']`);
 
     if (!wrapper || !list || !item) return;
 
-    if (item.length < 1 && !list.getAttribute('yc-slider-disabled')) return;
+    if (item.length < 1 && !list.dataset.swfDisabled) return;
 
-    const controller = list.getAttribute('yc-controller-role') === 'controller';
+    const controller = list.dataset.swfCtrlRole === 'controller';
 
     const swiperParams = getSwiperConfig(e, wrapper, list, item, controller);
 
@@ -47,18 +58,17 @@ export function initSliders() {
 
     let swiperInstance: SwiperWithRefresh;
 
-    if (!list.getAttribute('yc-slider-init')) {
+    if (!list.dataset.swfInit) {
       swiperInstance = new Swiper(wrapper, swiperParams);
     };
 
     const width = window.innerWidth;
-    const attributeValue = list.getAttribute('yc-slider-init');
-    // console.log(attributeValue);
-    if (attributeValue?.includes('desktop') && width > 992) {
+    const initValue = list.dataset.swfInit;
+    if (initValue?.includes('desktop') && width > 992) {
       swiperInstance = new Swiper(wrapper, swiperParams);
-    } else if (attributeValue?.includes('tablet') && width > 568 && width <= 991) {
+    } else if (initValue?.includes('tablet') && width > 568 && width <= 991) {
       swiperInstance = new Swiper(wrapper, swiperParams);
-    } else if (attributeValue?.includes('mobile') && width >= 320 && width <= 568) {
+    } else if (initValue?.includes('mobile') && width >= 320 && width <= 568) {
       swiperInstance = new Swiper(wrapper, swiperParams);
     }
 
@@ -69,40 +79,72 @@ export function initSliders() {
         swiperInstance.params.slideClass = getFirstWord(item);
         swiperInstance.update();
       };
-      sliderInstances[`${e.getAttribute('yc-slider-component')}-${index}`] = {
+
+      // Dispatch per-slider initialization event
+      e.dispatchEvent(new CustomEvent('swfSliderInit', {
+        detail: {
+          swiper: swiperInstance,
+          element: e,
+        },
+        bubbles: true,
+      }));
+
+      sliderInstances[`${e.dataset.swfComponent}-${index}`] = {
         swiper: swiperInstance,
         control: controller,
       };
     }
-    if (list.getAttribute('yc-slider-filter')) {
+    if (list.dataset.swfFilter) {
       initializeSwiperObserver(swiperInstance, list);
     }
   });
 
-  window.dispatchEvent(new CustomEvent('ycSlidersLoaded', {
-    detail: { sliders: sliderInstances },
+  // Dispatch global loaded event
+  window.dispatchEvent(new CustomEvent('swfLoaded', {
+    detail: {
+      sliders: sliderInstances,
+      timestamp: Date.now(),
+    },
   }));
 
+  // Dispatch resize event if this is a reinitialize
+  if (isReinitialize) {
+    window.dispatchEvent(new CustomEvent('swfResize', {
+      detail: {
+        sliders: sliderInstances,
+        timestamp: Date.now(),
+        activeBreakpoint: getActiveBreakpoint(),
+      },
+    }));
+  }
 
-  window.ycAttributes = window.ycAttributes || {};
-  window.ycAttributes!.sliders = sliderInstances;
-  window.ycAttributes!.initFunction = initSliders
+  // Set global swiperflow object
+  if (!window.swiperflow) {
+    window.swiperflow = {
+      sliders: sliderInstances,
+      init: initSliders,
+    };
+  } else {
+    window.swiperflow.sliders = sliderInstances;
+    window.swiperflow.init = initSliders;
+  }
 
   // controller logic
-  if (window.ycAttributes && window.ycAttributes.sliders) {
-    const sliderKeys = Object.keys(window.ycAttributes.sliders);
+  if (window.swiperflow && window.swiperflow.sliders) {
+    const sliderKeys = Object.keys(window.swiperflow.sliders);
     const { length } = sliderKeys;
     for (let i = 0; i < length; i++) {
       const key = sliderKeys[i];
-      const slider = window.ycAttributes.sliders[key];
+      const slider = window.swiperflow.sliders[key];
       if (slider.control) {
-        const allPairElements = document.querySelectorAll('[yc-controller-pair]');
+        const allPairElements = document.querySelectorAll('[swf-ctrl-pair]');
         const controls = [];
         for (const element of allPairElements) {
+          const htmlElement = element as HTMLElement;
           if (
             element !== slider.swiper.slidesEl &&
-            element.getAttribute('yc-controller-pair') ===
-            slider.swiper.slidesEl.getAttribute('yc-controller-pair')
+            htmlElement.dataset.swfCtrlPair ===
+            (slider.swiper.slidesEl as HTMLElement).dataset.swfCtrlPair
           ) {
             const parent = element.parentNode as any;
             const parentSwiper = parent?.swiper;
@@ -115,15 +157,6 @@ export function initSliders() {
       }
     }
   }
-}
-
-// Debounce utility
-function debounce(fn: () => void, delay: number) {
-  let timer: number;
-  return () => {
-    clearTimeout(timer);
-    timer = window.setTimeout(fn, delay);
-  };
 }
 
 // Initial call
