@@ -29,7 +29,7 @@ Every SwiperFlow slider requires these core elements:
 **Element Roles:**
 
 - `data-swf-component` - Main container that identifies this as a SwiperFlow slider
-- `data-swf-element="wrapper"` - Wrapper element (required by Swiper)
+- `data-swf-element="wrapper"` - Wrapper element (required by Swiper). Also accepts: `"wrap"`, `"container"`
 - `data-swf-element="list"` - The slides container where you add configuration attributes
 - `data-swf-element="item"` - Individual slide items
 
@@ -173,10 +173,11 @@ Control when the slider initializes based on viewport size:
 
 ### Advanced Features
 
-| Attribute         | Description                                                |
-| ----------------- | ---------------------------------------------------------- |
-| `data-swf-double` | Duplicates all slides (useful for infinite scroll effects) |
-| `data-swf-filter` | Watches for DOM changes and updates slider automatically   |
+| Attribute                  | Description                                                               |
+| -------------------------- | ------------------------------------------------------------------------- |
+| `data-swf-double`          | Duplicates all slides (useful for infinite scroll effects)                |
+| `data-swf-double-slides`   | Alias for `data-swf-double` - duplicates all slides                       |
+| `data-swf-filter`          | Watches for DOM changes and updates slider automatically                  |
 
 ### Controller/Sync
 

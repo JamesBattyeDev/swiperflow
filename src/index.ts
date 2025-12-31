@@ -48,7 +48,12 @@ export function initSliders() {
     logger.log(`INITIALIZING SLIDER #${index + 1}`);
     logger.log(`━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n`);
 
-    const wrapper = e.querySelector<HTMLElement>(`[data-swf-element='wrapper']`);
+    // Support multiple naming conventions for wrapper
+    const wrapper =
+      e.querySelector<HTMLElement>(`[data-swf-element='wrapper']`) ||
+      e.querySelector<HTMLElement>(`[data-swf-element='wrap']`) ||
+      e.querySelector<HTMLElement>(`[data-swf-element='container']`);
+
     const list = e.querySelector<HTMLElement>(`[data-swf-element='list']`);
     const item = e.querySelectorAll<HTMLElement>(`[data-swf-element='item']`);
 

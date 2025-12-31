@@ -89,9 +89,9 @@ export function getSwiperConfig(
   logger.log('itemClass:', itemClass);
   logger.log('listClass:', listClass);
 
-  // Duplicate slides if the attribute 'swf-double' is present
-  if (list.dataset.swfDouble) {
-    logger.log('\n--- Duplicating slides (swfDouble present) ---');
+  // Duplicate slides if the attribute 'swf-double' or 'swf-double-slides' is present
+  if (list.dataset.swfDouble || list.dataset.swfDoubleSlides) {
+    logger.log('\n--- Duplicating slides (swfDouble or swfDoubleSlides present) ---');
     item.forEach((item) => {
       const clone = item.cloneNode(true) as HTMLElement;
       list.appendChild(clone);
