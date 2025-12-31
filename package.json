@@ -1,0 +1,62 @@
+{
+  "name": "@yes-chef/yes-chef-sliders",
+  "version": "2.0.13",
+  "description": "OS Project for YC Webflow Slider.",
+  "homepage": "https://github.com/yes-chef/yes-chef-sliders#readme",
+  "license": "ISC",
+  "keywords": [],
+  "author": {
+    "name": "yes-chef",
+    "url": "https://yes-chef.com/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yes-chef/yes-chef-sliders.git"
+  },
+  "bugs": {
+    "url": "https://github.com/yes-chef/yes-chef-sliders/issues"
+  },
+  "type": "module",
+  "main": "src/index.ts",
+  "module": "src/index.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "dev": "cross-env NODE_ENV=development node ./bin/build.js",
+    "build": "cross-env NODE_ENV=production node ./bin/build.js",
+    "lint": "eslint --ignore-path .gitignore ./src && prettier --check ./src",
+    "lint:fix": "eslint --ignore-path .gitignore ./src --fix",
+    "check": "tsc --noEmit",
+    "format": "prettier --write ./src",
+    "test": "playwright test",
+    "test:headed": "playwright test --headed",
+    "release": "changeset publish",
+    "update": "pnpm update -i -L -r",
+    "launch": "git pull && pnpm changeset && git add . && git commit -m 'Automated changeset commit' && git push && echo 'Open Pull Requests: https://github.com/james-battye/yes-chef-sliders/pulls'"
+  },
+  "devDependencies": {
+    "@changesets/changelog-git": "^0.1.14",
+    "@changesets/cli": "^2.26.1",
+    "@finsweet/eslint-config": "^2.0.5",
+    "@finsweet/tsconfig": "^1.3.2",
+    "@playwright/test": "^1.35.0",
+    "@typescript-eslint/eslint-plugin": "^5.59.9",
+    "@typescript-eslint/parser": "^5.59.9",
+    "cross-env": "^7.0.3",
+    "esbuild": "^0.17.19",
+    "eslint": "^8.42.0",
+    "eslint-config-prettier": "^8.8.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "eslint-plugin-simple-import-sort": "^10.0.0",
+    "prettier": "^2.8.8",
+    "typescript": "^5.1.3"
+  },
+  "dependencies": {
+    "@finsweet/ts-utils": "^0.39.2",
+    "swiper": "^11.0.3"
+  },
+  "engines": {
+    "pnpm": ">=8"
+  }
+}
