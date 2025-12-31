@@ -3,6 +3,7 @@ import { initializeSwiperObserver } from './config/filterConfig';
 import { getSwiperConfig } from './config/swiperConfig';
 import { getFirstWord } from '$utils/getClassName';
 import { debounce } from './helpers/debounce';
+import type { SwiperWithRefresh } from './types/SwiperWithRefresh';
 
 // Extend the Window interface to include swiperflow
 declare global {
@@ -52,11 +53,7 @@ export function initSliders() {
 
     const swiperParams = getSwiperConfig(e, wrapper, list, item, controller);
 
-    interface SwiperWithRefresh extends Swiper {
-      refreshClassName?: () => void;
-    }
-
-    let swiperInstance: SwiperWithRefresh;
+    let swiperInstance: SwiperWithRefresh | null = null;
 
     if (!list.dataset.swfInit) {
       swiperInstance = new Swiper(wrapper, swiperParams);
@@ -94,7 +91,7 @@ export function initSliders() {
         control: controller,
       };
     }
-    if (list.dataset.swfFilter) {
+    if (list.dataset.swfFilter && swiperInstance) {
       initializeSwiperObserver(swiperInstance, list);
     }
   });
