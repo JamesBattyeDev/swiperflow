@@ -1,0 +1,9 @@
+- Variable prefix (not yc-slider). instead use (swf-) so it would be swf-element and swf-gap
+- Use dataset instead of getAttribute
+- Logging query param. When the url has ?swf-debug={full || minimal} then we will log. depending on the answer depends on how much we're logging.
+- Add event firing for slider resizing
+- Move debounce to helper folder. Generally move utilities to the helper
+- Set the defaults in a cleaner way. Can we set an object at the top and override?
+- Helper function for all these ternary operations. Lets make it a bit easier to read all of those.
+- Change attr names to be less verbose. mainly the breakpoint ones. swf-desktop .
+- Change all mentions of 'yc-sliders' to be 'swiperflow' or 'swf'. This is being rebranded.

@@ -88,6 +88,7 @@ export function initSliders() {
   window.ycAttributes!.sliders = sliderInstances;
   window.ycAttributes!.initFunction = initSliders
 
+  // controller logic
   if (window.ycAttributes && window.ycAttributes.sliders) {
     const sliderKeys = Object.keys(window.ycAttributes.sliders);
     const { length } = sliderKeys;
