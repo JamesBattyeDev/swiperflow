@@ -220,7 +220,11 @@ class ConfigParser {
     const tiers = [
       { key: '992', view: list.dataset.swfBpDesktop, gap: list.dataset.swfGapDesktop },
       { key: '768', view: list.dataset.swfBpTablet, gap: list.dataset.swfGapTablet },
-      { key: '480', view: list.dataset.swfBpMobileLandscape, gap: list.dataset.swfGapMobileLandscape },
+      {
+        key: '480',
+        view: list.dataset.swfBpMobileLandscape,
+        gap: list.dataset.swfGapMobileLandscape,
+      },
       { key: '0', view: list.dataset.swfBpMobilePortrait, gap: list.dataset.swfGapMobilePortrait },
     ];
 

@@ -394,9 +394,7 @@ describe('shouldInitAtCurrentBreakpoint', () => {
   it('supports multiple breakpoints in init value', () => {
     setWidth(1200);
     expect(
-      configParser.shouldInitAtCurrentBreakpoint(
-        el({ 'data-swf-init': 'desktop,mobilePortrait' })
-      )
+      configParser.shouldInitAtCurrentBreakpoint(el({ 'data-swf-init': 'desktop,mobilePortrait' }))
     ).toBe(true);
   });
 });
