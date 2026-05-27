@@ -210,19 +210,49 @@ describe('parseBreakpoints', () => {
   it('parses desktop breakpoint', () => {
     const element = document.createElement('div');
     element.dataset.swfBpDesktop = '3';
-    expect(configParser.parseBreakpoints(element)).toEqual({ '991': { slidesPerView: 3 } });
+    expect(configParser.parseBreakpoints(element)).toEqual({ '992': { slidesPerView: 3 } });
   });
 
-  it('parses all three breakpoints', () => {
+  it('parses all breakpoints', () => {
     const element = document.createElement('div');
     element.dataset.swfBpDesktop = '4';
     element.dataset.swfBpTablet = '2';
-    element.dataset.swfBpMobile = '1';
+    element.dataset.swfBpMobileLandscape = '1';
+    element.dataset.swfBpMobilePortrait = '1';
     const result = configParser.parseBreakpoints(element);
     expect(result).toEqual({
-      '991': { slidesPerView: 4 },
-      '568': { slidesPerView: 2 },
-      '320': { slidesPerView: 1 },
+      '992': { slidesPerView: 4 },
+      '768': { slidesPerView: 2 },
+      '480': { slidesPerView: 1 },
+      '0': { slidesPerView: 1 },
+    });
+  });
+
+  it('parses per-breakpoint gap', () => {
+    const element = document.createElement('div');
+    element.dataset.swfBpDesktop = '3';
+    element.dataset.swfGapDesktop = '24';
+    element.dataset.swfBpTablet = '2';
+    element.dataset.swfGapTablet = '16';
+    expect(configParser.parseBreakpoints(element)).toEqual({
+      '992': { slidesPerView: 3, spaceBetween: 24 },
+      '768': { slidesPerView: 2, spaceBetween: 16 },
+    });
+  });
+
+  it('gap-only breakpoint without slidesPerView', () => {
+    const element = document.createElement('div');
+    element.dataset.swfGapDesktop = '20';
+    expect(configParser.parseBreakpoints(element)).toEqual({
+      '992': { spaceBetween: 20 },
+    });
+  });
+
+  it('supports "auto" for slidesPerView', () => {
+    const element = document.createElement('div');
+    element.dataset.swfBpDesktop = 'auto';
+    expect(configParser.parseBreakpoints(element)).toEqual({
+      '992': { slidesPerView: 'auto' },
     });
   });
 });
@@ -298,7 +328,7 @@ describe('parsePagination', () => {
 // ── getActiveBreakpoint ─────────────────────────────────────────
 
 describe('getActiveBreakpoint', () => {
-  it('returns desktop for width > 991', () => {
+  it('returns desktop for width >= 992', () => {
     setWidth(1200);
     expect(configParser.getActiveBreakpoint()).toBe('desktop');
   });
@@ -313,24 +343,29 @@ describe('getActiveBreakpoint', () => {
     expect(configParser.getActiveBreakpoint()).toBe('tablet');
   });
 
-  it('returns tablet for width > 568', () => {
-    setWidth(700);
+  it('returns tablet at boundary (768)', () => {
+    setWidth(768);
     expect(configParser.getActiveBreakpoint()).toBe('tablet');
   });
 
-  it('returns tablet at boundary (569)', () => {
-    setWidth(569);
-    expect(configParser.getActiveBreakpoint()).toBe('tablet');
+  it('returns mobileLandscape at boundary (767)', () => {
+    setWidth(767);
+    expect(configParser.getActiveBreakpoint()).toBe('mobileLandscape');
   });
 
-  it('returns mobile at boundary (568)', () => {
-    setWidth(568);
-    expect(configParser.getActiveBreakpoint()).toBe('mobile');
+  it('returns mobileLandscape at boundary (480)', () => {
+    setWidth(480);
+    expect(configParser.getActiveBreakpoint()).toBe('mobileLandscape');
   });
 
-  it('returns mobile for small widths', () => {
+  it('returns mobilePortrait at boundary (479)', () => {
+    setWidth(479);
+    expect(configParser.getActiveBreakpoint()).toBe('mobilePortrait');
+  });
+
+  it('returns mobilePortrait for small widths', () => {
     setWidth(320);
-    expect(configParser.getActiveBreakpoint()).toBe('mobile');
+    expect(configParser.getActiveBreakpoint()).toBe('mobilePortrait');
   });
 });
 
@@ -357,9 +392,11 @@ describe('shouldInitAtCurrentBreakpoint', () => {
   });
 
   it('supports multiple breakpoints in init value', () => {
-    setWidth(700);
+    setWidth(1200);
     expect(
-      configParser.shouldInitAtCurrentBreakpoint(el({ 'data-swf-init': 'tablet,mobile' }))
+      configParser.shouldInitAtCurrentBreakpoint(
+        el({ 'data-swf-init': 'desktop,mobilePortrait' })
+      )
     ).toBe(true);
   });
 });

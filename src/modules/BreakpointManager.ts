@@ -1,19 +1,21 @@
 import eventBus from './EventBus';
 
-export type Breakpoint = 'desktop' | 'tablet' | 'mobile';
+export type Breakpoint = 'desktop' | 'tablet' | 'mobileLandscape' | 'mobilePortrait';
 
 export interface BreakpointConfig {
   desktop: number;
   tablet: number;
-  mobile: number;
+  mobileLandscape: number;
+  mobilePortrait: number;
 }
 
 class BreakpointManager {
   #current: Breakpoint;
   #breakpoints: BreakpointConfig = {
     desktop: 992,
-    tablet: 991,
-    mobile: 0,
+    tablet: 768,
+    mobileLandscape: 480,
+    mobilePortrait: 0,
   };
 
   constructor() {
@@ -24,7 +26,8 @@ class BreakpointManager {
     const width = window.innerWidth;
     if (width >= this.#breakpoints.desktop) return 'desktop';
     if (width >= this.#breakpoints.tablet) return 'tablet';
-    return 'mobile';
+    if (width >= this.#breakpoints.mobileLandscape) return 'mobileLandscape';
+    return 'mobilePortrait';
   }
 
   get current(): Breakpoint {

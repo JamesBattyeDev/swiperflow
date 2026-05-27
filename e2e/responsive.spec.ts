@@ -14,9 +14,9 @@ test.describe('desktop viewport (1280px)', () => {
     expect(hasSwiper).toBe(true);
   });
 
-  test('mobile-only slider does not initialize', async ({ page }) => {
+  test('mobilePortrait-only slider does not initialize', async ({ page }) => {
     const hasSwiper = await page.evaluate(() => {
-      return (window as any).swiperflow.find('mobile-only') !== undefined;
+      return (window as any).swiperflow.find('mobilePortrait-only') !== undefined;
     });
     expect(hasSwiper).toBe(false);
   });
@@ -43,9 +43,9 @@ test.describe('mobile viewport (400px)', () => {
     expect(hasSwiper).toBe(false);
   });
 
-  test('mobile-only slider initializes', async ({ page }) => {
+  test('mobilePortrait-only slider initializes', async ({ page }) => {
     const hasSwiper = await page.evaluate(() => {
-      return (window as any).swiperflow.find('mobile-only') !== undefined;
+      return (window as any).swiperflow.find('mobilePortrait-only') !== undefined;
     });
     expect(hasSwiper).toBe(true);
   });

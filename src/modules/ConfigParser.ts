@@ -14,7 +14,7 @@ import {
   Thumbs,
 } from 'swiper/modules';
 
-export type Breakpoint = 'desktop' | 'tablet' | 'mobile';
+export type Breakpoint = 'desktop' | 'tablet' | 'mobileLandscape' | 'mobilePortrait';
 
 class ConfigParser {
   /**
@@ -22,9 +22,10 @@ class ConfigParser {
    */
   getActiveBreakpoint(): Breakpoint {
     const width = window.innerWidth;
-    if (width > 991) return 'desktop';
-    if (width > 568) return 'tablet';
-    return 'mobile';
+    if (width >= 992) return 'desktop';
+    if (width >= 768) return 'tablet';
+    if (width >= 480) return 'mobileLandscape';
+    return 'mobilePortrait';
   }
 
   /**
@@ -41,7 +42,8 @@ class ConfigParser {
 
     if (initValue.includes('desktop')) breakpoints.push('desktop');
     if (initValue.includes('tablet')) breakpoints.push('tablet');
-    if (initValue.includes('mobile')) breakpoints.push('mobile');
+    if (initValue.includes('mobileLandscape')) breakpoints.push('mobileLandscape');
+    if (initValue.includes('mobilePortrait')) breakpoints.push('mobilePortrait');
 
     return breakpoints.length > 0 ? breakpoints : null;
   }
@@ -215,25 +217,19 @@ class ConfigParser {
   parseBreakpoints(list: HTMLElement) {
     const breakpointParams: any = {};
 
-    // Check for desktop breakpoint attribute and set the corresponding Swiper option
-    if (list.dataset.swfBpDesktop) {
-      breakpointParams['991'] = {
-        slidesPerView: parseInt(list.dataset.swfBpDesktop),
-      };
-    }
+    const tiers = [
+      { key: '992', view: list.dataset.swfBpDesktop, gap: list.dataset.swfGapDesktop },
+      { key: '768', view: list.dataset.swfBpTablet, gap: list.dataset.swfGapTablet },
+      { key: '480', view: list.dataset.swfBpMobileLandscape, gap: list.dataset.swfGapMobileLandscape },
+      { key: '0', view: list.dataset.swfBpMobilePortrait, gap: list.dataset.swfGapMobilePortrait },
+    ];
 
-    // Check for tablet breakpoint attribute and set the corresponding Swiper option
-    if (list.dataset.swfBpTablet) {
-      breakpointParams['568'] = {
-        slidesPerView: parseInt(list.dataset.swfBpTablet),
-      };
-    }
-
-    // Check for mobile breakpoint attribute and set the corresponding Swiper option
-    if (list.dataset.swfBpMobile) {
-      breakpointParams['320'] = {
-        slidesPerView: parseInt(list.dataset.swfBpMobile),
-      };
+    for (const { key, view, gap } of tiers) {
+      if (!view && !gap) continue;
+      const bp: any = {};
+      if (view) bp.slidesPerView = this.parseStringOrNumber(view, 1);
+      if (gap) bp.spaceBetween = parseInt(gap) || 0;
+      breakpointParams[key] = bp;
     }
 
     return breakpointParams;
