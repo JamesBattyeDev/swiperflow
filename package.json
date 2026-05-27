@@ -1,8 +1,8 @@
 {
   "name": "@jamesbattye-dev/swiperflow",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "description": "Swiper ported to attributes for Webflow",
-  "homepage": "https://github.com/james-battye/swiperflow#readme",
+  "homepage": "https://github.com/JamesBattyeDev/swiperflow#readme",
   "license": "ISC",
   "keywords": [],
   "author": {
@@ -11,10 +11,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/james-battye/swiperflow.git"
+    "url": "git+https://github.com/JamesBattyeDev/swiperflow.git"
   },
   "bugs": {
-    "url": "https://github.com/james-battye/swiperflow/issues"
+    "url": "https://github.com/JamesBattyeDev/swiperflow/issues"
   },
   "type": "module",
   "main": "src/index.ts",
