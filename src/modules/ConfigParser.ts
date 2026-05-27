@@ -1,10 +1,22 @@
-import config from "src/config/config";
-import { A11y, Autoplay, Controller, EffectCards, EffectCoverflow, EffectCreative, EffectCube, EffectFade, Keyboard, Navigation, Pagination, Thumbs } from "swiper/modules";
+import config from 'src/config/config';
+import {
+  A11y,
+  Autoplay,
+  Controller,
+  EffectCards,
+  EffectCoverflow,
+  EffectCreative,
+  EffectCube,
+  EffectFade,
+  Keyboard,
+  Navigation,
+  Pagination,
+  Thumbs,
+} from 'swiper/modules';
 
 export type Breakpoint = 'desktop' | 'tablet' | 'mobile';
 
 class ConfigParser {
-
   /**
    * Get the currently active breakpoint based on window width
    */
@@ -55,31 +67,43 @@ class ConfigParser {
       item: component.querySelector(`[${config.keyWithPrefix('element')}="item"]`),
       navigation: component.querySelector(`[${config.keyWithPrefix('element')}="navigation"]`),
       pagination: component.querySelector(`[${config.keyWithPrefix('element')}="pagination"]`),
-    }
+    };
 
-    return elements
+    return elements;
   }
 
   parse(component: HTMLElement) {
-    const elements = this.getElements(component)
-    const list = elements.list as HTMLElement
+    const elements = this.getElements(component);
+    const list = elements.list as HTMLElement;
 
-    const navigationParams = this.parseNavigation(component)
-    const paginationParams = this.parsePagination(component)
-    const autoplayParams = this.parseAutoplay(list)
-    const keyboardParams = this.parseKeyboard(list)
-    const effectsParams = this.parseEffects(list)
-    const breakpointParams = this.parseBreakpoints(list)
-    const directionParams = this.parseDirection(list)
+    const navigationParams = this.parseNavigation(component);
+    const paginationParams = this.parsePagination(component);
+    const autoplayParams = this.parseAutoplay(list);
+    const keyboardParams = this.parseKeyboard(list);
+    const effectsParams = this.parseEffects(list);
+    const breakpointParams = this.parseBreakpoints(list);
+    const directionParams = this.parseDirection(list);
 
-    this.parseEasing(list)
+    this.parseEasing(list);
 
-    const itemClass = elements.item?.className.split(' ')[0] || 'swiper-slide'
-    const listClass = list.className.split(' ')[0] || 'swiper-wrapper'
-
+    const itemClass = elements.item?.className.split(' ')[0] || 'swiper-slide';
+    const listClass = list.className.split(' ')[0] || 'swiper-wrapper';
 
     const swiperParams = {
-      modules: [Navigation, Pagination, Autoplay, Keyboard, A11y, Thumbs, Controller, EffectFade, EffectCards, EffectCoverflow, EffectCreative, EffectCube],
+      modules: [
+        Navigation,
+        Pagination,
+        Autoplay,
+        Keyboard,
+        A11y,
+        Thumbs,
+        Controller,
+        EffectFade,
+        EffectCards,
+        EffectCoverflow,
+        EffectCreative,
+        EffectCube,
+      ],
       speed: parseInt(list.getAttribute(config.keyWithPrefix('speed')) || '') || 400,
       spaceBetween: parseInt(list.getAttribute(config.keyWithPrefix('gap')) || '') || 0,
       loop: list.hasAttribute(config.keyWithPrefix('loop')),
@@ -92,43 +116,55 @@ class ConfigParser {
         itemRoleDescriptionMessage: 'slider item',
       },
       navigation: navigationParams,
-      loopAdditionalSlides: parseInt(list.getAttribute(config.keyWithPrefix('additional')) || '') || 0,
+      loopAdditionalSlides:
+        parseInt(list.getAttribute(config.keyWithPrefix('additional')) || '') || 0,
       pagination: paginationParams,
       autoplay: autoplayParams,
       keyboard: keyboardParams,
       breakpoints: breakpointParams,
-      slideActiveClass: list.getAttribute(config.keyWithPrefix('active-class')) || 'swiper-slide-active',
+      slideActiveClass:
+        list.getAttribute(config.keyWithPrefix('active-class')) || 'swiper-slide-active',
       centeredSlides: list.hasAttribute(config.keyWithPrefix('centered')),
       init: list.dataset.swfDisabled === undefined,
-      effect: window.innerWidth < 480 && effectsParams.effects === 'creative-flat' ? '' : effectsParams.effects,
+      effect:
+        window.innerWidth < 480 && effectsParams.effects === 'creative-flat'
+          ? ''
+          : effectsParams.effects,
       grabCursor: list.getAttribute(config.keyWithPrefix('grab')) !== 'false',
       allowTouchMove: list.getAttribute(config.keyWithPrefix('swipe')) !== 'false',
       simulateTouch: list.getAttribute(config.keyWithPrefix('touch')) !== 'false',
       fadeEffect: effectsParams.fadeEffect,
       cardsEffect: effectsParams.effects === 'cards' ? effectsParams.cardEffect : undefined,
-      creativeEffect: effectsParams.effects === 'creative' ? effectsParams.creativeEffect : undefined,
+      creativeEffect:
+        effectsParams.effects === 'creative' ? effectsParams.creativeEffect : undefined,
       elements,
-    }
+    };
 
-    return swiperParams
+    return swiperParams;
   }
 
   parseStringOrNumber(value: string | null, defaultValue: number | string): number | string {
-    if (!value) return defaultValue
-    if (value === 'auto') return 'auto'
-    const num = parseFloat(value)
-    return isNaN(num) ? defaultValue : num
+    if (!value) return defaultValue;
+    if (value === 'auto') return 'auto';
+    const num = parseFloat(value);
+    return isNaN(num) ? defaultValue : num;
   }
 
   parseNavigation(component: HTMLElement) {
-    const nav = component.querySelector<HTMLElement>(`[${config.keyWithPrefix('element')}="navigation"]`);
+    const nav = component.querySelector<HTMLElement>(
+      `[${config.keyWithPrefix('element')}="navigation"]`
+    );
 
     if (!nav) {
       return { enabled: false };
     }
 
-    const nextArrow = nav.querySelector<HTMLElement>(`[${config.keyWithPrefix('element')}="next-arrow"]`);
-    const prevArrow = nav.querySelector<HTMLElement>(`[${config.keyWithPrefix('element')}="prev-arrow"]`);
+    const nextArrow = nav.querySelector<HTMLElement>(
+      `[${config.keyWithPrefix('element')}="next-arrow"]`
+    );
+    const prevArrow = nav.querySelector<HTMLElement>(
+      `[${config.keyWithPrefix('element')}="prev-arrow"]`
+    );
 
     if (!nextArrow || !prevArrow) {
       return { enabled: false };
@@ -141,13 +177,17 @@ class ConfigParser {
   }
 
   parsePagination(component: HTMLElement) {
-    const paginationElement = component.querySelector<HTMLElement>(`[${config.keyWithPrefix('element')}="pagination"]`);
+    const paginationElement = component.querySelector<HTMLElement>(
+      `[${config.keyWithPrefix('element')}="pagination"]`
+    );
 
     if (!paginationElement) {
       return { enabled: false };
     }
 
-    const paginationDot = paginationElement.querySelector<HTMLElement>(`[${config.keyWithPrefix('element')}="pagination-dot"]`);
+    const paginationDot = paginationElement.querySelector<HTMLElement>(
+      `[${config.keyWithPrefix('element')}="pagination-dot"]`
+    );
 
     if (!paginationDot) {
       return { enabled: false };
@@ -165,7 +205,9 @@ class ConfigParser {
   }
 
   parseDirection(list: HTMLElement): 'horizontal' | 'vertical' {
-    const directionAttr = list.getAttribute(config.keyWithPrefix('direction')) as 'horizontal' | 'vertical' || 'horizontal';
+    const directionAttr =
+      (list.getAttribute(config.keyWithPrefix('direction')) as 'horizontal' | 'vertical') ||
+      'horizontal';
 
     return ['horizontal', 'vertical'].includes(directionAttr) ? directionAttr : 'horizontal';
   }
@@ -183,28 +225,28 @@ class ConfigParser {
     // Check for tablet breakpoint attribute and set the corresponding Swiper option
     if (list.dataset.swfBpTablet) {
       breakpointParams['568'] = {
-        slidesPerView: parseInt(list.dataset.swfBpTablet)
+        slidesPerView: parseInt(list.dataset.swfBpTablet),
       };
     }
 
     // Check for mobile breakpoint attribute and set the corresponding Swiper option
     if (list.dataset.swfBpMobile) {
       breakpointParams['320'] = {
-        slidesPerView: parseInt(list.dataset.swfBpMobile)
+        slidesPerView: parseInt(list.dataset.swfBpMobile),
       };
     }
 
     return breakpointParams;
   }
 
-
   parseAutoplay(list: HTMLElement) {
-    const enabled = list.hasAttribute(config.keyWithPrefix('autoplay'))
+    const enabled = list.hasAttribute(config.keyWithPrefix('autoplay'));
 
     if (enabled) {
       return {
         enabled: true,
-        delay: parseInt(list.getAttribute(config.keyWithPrefix('autoplay-delay')) as string) || 3000
+        delay:
+          parseInt(list.getAttribute(config.keyWithPrefix('autoplay-delay')) as string) || 3000,
       };
     }
 
@@ -219,7 +261,8 @@ class ConfigParser {
     if (enabled) {
       return {
         enabled: true,
-        onlyInViewport: list.getAttribute(config.keyWithPrefix('keyboard-only-in-viewport')) !== 'false',
+        onlyInViewport:
+          list.getAttribute(config.keyWithPrefix('keyboard-only-in-viewport')) !== 'false',
         pageUpDown: list.getAttribute(config.keyWithPrefix('keyboard-page-up-down')) !== 'false',
       };
     }
@@ -232,7 +275,7 @@ class ConfigParser {
   parseEffects(list: HTMLElement) {
     const effectAttr = list.getAttribute(config.keyWithPrefix('effect')) || '';
 
-    const effects: { effects: string;[key: string]: any } = {
+    const effects: { effects: string; [key: string]: any } = {
       effects: 'none',
     };
 
@@ -301,7 +344,6 @@ class ConfigParser {
 
     return finalValue;
   }
-
 }
 
 const configParser = new ConfigParser();

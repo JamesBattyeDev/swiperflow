@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Keyboard Slider</title>
+  <style>
+    .swiper-wrapper-el { overflow: hidden; }
+    .swiper-list { display: flex; }
+    .swiper-item { flex-shrink: 0; width: 100%; height: 100px; display: flex; align-items: center; justify-content: center; }
+  </style>
+</head>
+<body>
+  <div class="swiper-component" data-swf-component="keyboard-slider">
+    <div class="swiper-wrapper-el" data-swf-element="wrapper">
+      <div class="swiper-list" data-swf-element="list"
+           data-swf-keyboard
+           data-swf-keyboard-only-in-viewport="true"
+           data-swf-speed="100">
+        <div class="swiper-item" data-swf-element="item">KB 1</div>
+        <div class="swiper-item" data-swf-element="item">KB 2</div>
+        <div class="swiper-item" data-swf-element="item">KB 3</div>
+        <div class="swiper-item" data-swf-element="item">KB 4</div>
+      </div>
+    </div>
+  </div>
+  <script defer src="/dist/index.js"></script>
+</body>
+</html>

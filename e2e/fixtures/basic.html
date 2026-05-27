@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Basic Slider</title>
+  <style>
+    .swiper-wrapper-el { overflow: hidden; }
+    .swiper-list { display: flex; }
+    .swiper-item { flex-shrink: 0; width: 100%; height: 100px; display: flex; align-items: center; justify-content: center; }
+    .swiper-nav { display: flex; gap: 8px; margin-top: 8px; }
+    .swiper-pagination-el { display: flex; gap: 4px; margin-top: 8px; }
+    .swiper-dot { width: 10px; height: 10px; border-radius: 50%; background: #ccc; cursor: pointer; }
+    .swiper-dot.is-active { background: #333; }
+  </style>
+</head>
+<body>
+  <div class="swiper-component" data-swf-component="basic">
+    <div class="swiper-wrapper-el" data-swf-element="wrapper">
+      <div class="swiper-list" data-swf-element="list" data-swf-speed="100">
+        <div class="swiper-item" data-swf-element="item">Slide 1</div>
+        <div class="swiper-item" data-swf-element="item">Slide 2</div>
+        <div class="swiper-item" data-swf-element="item">Slide 3</div>
+        <div class="swiper-item" data-swf-element="item">Slide 4</div>
+        <div class="swiper-item" data-swf-element="item">Slide 5</div>
+      </div>
+    </div>
+    <div class="swiper-nav" data-swf-element="navigation">
+      <button class="swiper-arrow" data-swf-element="prev-arrow">Prev</button>
+      <button class="swiper-arrow" data-swf-element="next-arrow">Next</button>
+    </div>
+    <div class="swiper-pagination-el" data-swf-element="pagination">
+      <div class="swiper-dot" data-swf-element="pagination-dot"></div>
+    </div>
+  </div>
+  <script defer src="/dist/index.js"></script>
+</body>
+</html>

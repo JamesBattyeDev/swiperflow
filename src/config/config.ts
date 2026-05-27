@@ -1,6 +1,6 @@
 export default {
   prefix: 'data-swf-',
-  keyWithPrefix(key: String) {
-    return this.prefix + key
-  }
-}
+  keyWithPrefix(key: string) {
+    return this.prefix + key;
+  },
+};

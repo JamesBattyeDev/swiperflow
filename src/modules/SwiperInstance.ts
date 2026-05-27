@@ -1,30 +1,30 @@
-import configParser from "./ConfigParser";
-import { Swiper } from "swiper";
+import { Swiper } from 'swiper';
+
+import configParser from './ConfigParser';
 
 export class SwiperInstance {
-  #swiper: Swiper | undefined
-  component: HTMLElement
+  #swiper: Swiper | undefined;
+  component: HTMLElement;
   config: any;
 
   constructor(element: HTMLElement) {
-    this.component = element
-    this.init()
+    this.component = element;
+    this.init();
   }
 
-
   init() {
-    this.destroy()
-    this.config = configParser.parse(this.component)
-    this.#swiper = new Swiper(this.config.elements.wrapper, this.config)
+    this.destroy();
+    this.config = configParser.parse(this.component);
+    this.#swiper = new Swiper(this.config.elements.wrapper, this.config);
   }
 
   destroy() {
     if (this.#swiper) {
-      this.#swiper.destroy()
+      this.#swiper.destroy();
     }
   }
 
   get getSwiperInstance() {
-    return this.#swiper
+    return this.#swiper;
   }
 }
