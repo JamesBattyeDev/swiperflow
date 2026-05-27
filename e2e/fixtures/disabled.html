@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Disabled Slider</title>
+  <style>
+    .swiper-wrapper-el { overflow: hidden; }
+    .swiper-list { display: flex; }
+    .swiper-item { flex-shrink: 0; width: 100%; height: 100px; display: flex; align-items: center; justify-content: center; }
+  </style>
+</head>
+<body>
+  <!-- Disabled slider -->
+  <div class="swiper-component" data-swf-component="disabled-slider" id="disabled">
+    <div class="swiper-wrapper-el" data-swf-element="wrapper">
+      <div class="swiper-list" data-swf-element="list" data-swf-disabled>
+        <div class="swiper-item" data-swf-element="item">Disabled 1</div>
+        <div class="swiper-item" data-swf-element="item">Disabled 2</div>
+        <div class="swiper-item" data-swf-element="item">Disabled 3</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Normal slider for comparison -->
+  <div class="swiper-component" data-swf-component="normal-slider" id="normal">
+    <div class="swiper-wrapper-el" data-swf-element="wrapper">
+      <div class="swiper-list" data-swf-element="list" data-swf-speed="100">
+        <div class="swiper-item" data-swf-element="item">Normal 1</div>
+        <div class="swiper-item" data-swf-element="item">Normal 2</div>
+        <div class="swiper-item" data-swf-element="item">Normal 3</div>
+      </div>
+    </div>
+  </div>
+  <script defer src="/dist/index.js"></script>
+</body>
+</html>

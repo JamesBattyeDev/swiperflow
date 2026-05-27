@@ -133,13 +133,25 @@ Add `data-swf-*` attributes to the **list element** (`data-swf-element="list"`) 
 
 ### Responsive Breakpoints
 
-Configure different slides per view at different screen sizes:
+Configure slides per view and gap at different screen sizes:
 
-| Attribute             | Breakpoint  | Swiper Property                    | Type          | Default | Description               |
-| --------------------- | ----------- | ---------------------------------- | ------------- | ------- | ------------------------- |
-| `data-swf-bp-desktop` | `≥ 992px`   | `breakpoints['991'].slidesPerView` | string/number | `1`     | Slides visible on desktop |
-| `data-swf-bp-tablet`  | `569-991px` | `breakpoints['568'].slidesPerView` | string/number | `1`     | Slides visible on tablet  |
-| `data-swf-bp-mobile`  | `≥ 320px`   | `breakpoints['320'].slidesPerView` | string/number | `1`     | Slides visible on mobile  |
+**Slides Per View**
+
+| Attribute                        | Breakpoint   | Swiper Property                    | Type          | Default | Description                          |
+| -------------------------------- | ------------ | ---------------------------------- | ------------- | ------- | ------------------------------------ |
+| `data-swf-bp-desktop`            | `≥ 992px`    | `breakpoints['992'].slidesPerView` | string/number | `1`     | Slides visible on desktop            |
+| `data-swf-bp-tablet`             | `768-991px`  | `breakpoints['768'].slidesPerView` | string/number | `1`     | Slides visible on tablet             |
+| `data-swf-bp-mobile-landscape`   | `480-767px`  | `breakpoints['480'].slidesPerView` | string/number | `1`     | Slides visible on mobile landscape   |
+| `data-swf-bp-mobile-portrait`    | `< 480px`    | `breakpoints['0'].slidesPerView`   | string/number | `1`     | Slides visible on mobile portrait    |
+
+**Gap (Space Between)**
+
+| Attribute                        | Breakpoint   | Swiper Property                    | Type   | Default | Description                    |
+| -------------------------------- | ------------ | ---------------------------------- | ------ | ------- | ------------------------------ |
+| `data-swf-gap-desktop`           | `≥ 992px`    | `breakpoints['992'].spaceBetween`  | number | `0`     | Gap between slides on desktop           |
+| `data-swf-gap-tablet`            | `768-991px`  | `breakpoints['768'].spaceBetween`  | number | `0`     | Gap between slides on tablet            |
+| `data-swf-gap-mobile-landscape`  | `480-767px`  | `breakpoints['480'].spaceBetween`  | number | `0`     | Gap between slides on mobile landscape  |
+| `data-swf-gap-mobile-portrait`   | `< 480px`    | `breakpoints['0'].spaceBetween`    | number | `0`     | Gap between slides on mobile portrait   |
 
 **Example:**
 
@@ -148,27 +160,33 @@ Configure different slides per view at different screen sizes:
   data-swf-element="list"
   data-swf-bp-desktop="4"
   data-swf-bp-tablet="2"
-  data-swf-bp-mobile="1"
+  data-swf-bp-mobile-landscape="1"
+  data-swf-gap-desktop="24"
+  data-swf-gap-tablet="16"
+  data-swf-gap-mobile-landscape="12"
   data-swf-gap="20"
 ></div>
 ```
+
+> **Note:** `data-swf-gap` sets the base gap. Per-breakpoint gap attributes override it at that breakpoint.
 
 ### Conditional Initialization
 
 Control when the slider initializes based on viewport size:
 
-| Attribute Value           | Description                             |
-| ------------------------- | --------------------------------------- |
-| `data-swf-init="desktop"` | Initialize only on desktop (`> 992px`)  |
-| `data-swf-init="tablet"`  | Initialize only on tablet (`569-991px`) |
-| `data-swf-init="mobile"`  | Initialize only on mobile (`320-568px`) |
-| `data-swf-disabled`       | Prevent initialization entirely         |
+| Attribute Value                      | Description                                    |
+| ------------------------------------ | ---------------------------------------------- |
+| `data-swf-init="desktop"`            | Initialize only on desktop (`≥ 992px`)         |
+| `data-swf-init="tablet"`             | Initialize only on tablet (`768-991px`)        |
+| `data-swf-init="mobileLandscape"`    | Initialize only on mobile landscape (`480-767px`) |
+| `data-swf-init="mobilePortrait"`     | Initialize only on mobile portrait (`< 480px`) |
+| `data-swf-disabled`                  | Prevent initialization entirely                |
 
 **Example:**
 
 ```html
-<!-- Only enable slider on mobile devices -->
-<div data-swf-element="list" data-swf-init="mobile"></div>
+<!-- Only enable slider on mobile portrait -->
+<div data-swf-element="list" data-swf-init="mobilePortrait"></div>
 ```
 
 ### Advanced Features
@@ -254,7 +272,7 @@ Link two sliders together so they move in sync:
       data-swf-element="list"
       data-swf-bp-desktop="4"
       data-swf-bp-tablet="2"
-      data-swf-bp-mobile="1"
+      data-swf-bp-mobile-landscape="1"
       data-swf-gap="24"
       data-swf-loop="true"
     >
@@ -271,12 +289,12 @@ Link two sliders together so they move in sync:
 </div>
 ```
 
-### Mobile-Only Slider
+### Mobile Portrait-Only Slider
 
 ```html
 <div data-swf-component>
   <div data-swf-element="wrapper">
-    <div data-swf-element="list" data-swf-init="mobile" data-swf-visible="1" data-swf-gap="16">
+    <div data-swf-element="list" data-swf-init="mobilePortrait" data-swf-visible="1" data-swf-gap="16">
       <div data-swf-element="item">Item 1</div>
       <div data-swf-element="item">Item 2</div>
       <div data-swf-element="item">Item 3</div>

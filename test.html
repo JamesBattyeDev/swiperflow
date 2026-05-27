@@ -1,0 +1,881 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SwiperFlow Test Page</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #f5f5f5;
+      padding: 20px;
+      line-height: 1.6;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 40px;
+      color: #333;
+    }
+
+    section {
+      background: white;
+      border-radius: 12px;
+      padding: 24px;
+      margin-bottom: 40px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    h2 {
+      margin-bottom: 8px;
+      color: #222;
+    }
+
+    .description {
+      color: #666;
+      font-size: 14px;
+      margin-bottom: 20px;
+    }
+
+    .description code {
+      background: #e8e8e8;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 12px;
+    }
+
+    /* Swiper component styles */
+    .swiper-component {
+      position: relative;
+      width: 100%;
+    }
+
+    .swiper-wrapper-el {
+      overflow: hidden;
+      border-radius: 8px;
+    }
+
+    .swiper-list {
+      display: flex;
+    }
+
+    .swiper-item {
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      font-weight: bold;
+      color: white;
+      border-radius: 8px;
+      height: 200px;
+      user-select: none;
+    }
+
+    .swiper-item:nth-child(6n+1) { background: linear-gradient(135deg, #667eea, #764ba2); }
+    .swiper-item:nth-child(6n+2) { background: linear-gradient(135deg, #f093fb, #f5576c); }
+    .swiper-item:nth-child(6n+3) { background: linear-gradient(135deg, #4facfe, #00f2fe); }
+    .swiper-item:nth-child(6n+4) { background: linear-gradient(135deg, #43e97b, #38f9d7); }
+    .swiper-item:nth-child(6n+5) { background: linear-gradient(135deg, #fa709a, #fee140); }
+    .swiper-item:nth-child(6n+6) { background: linear-gradient(135deg, #a8edea, #fed6e3); color: #333; }
+
+    /* Navigation styles */
+    .swiper-nav {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .swiper-arrow {
+      width: 40px;
+      height: 40px;
+      border: none;
+      border-radius: 50%;
+      background: #333;
+      color: white;
+      cursor: pointer;
+      font-size: 18px;
+      transition: background 0.2s;
+    }
+
+    .swiper-arrow:hover {
+      background: #555;
+    }
+
+  .swiper-list.vertical {
+    flex-direction: column;
+  }  
+
+    .swiper-arrow:disabled {
+      opacity: 0.3;
+      cursor: not-allowed;
+    }
+
+    /* Pagination styles */
+    .swiper-pagination-el {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 16px;
+    }
+
+    .swiper-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #ccc;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.2s;
+    }
+
+    .swiper-dot.is-active {
+      background: #333;
+      transform: scale(1.2);
+    }
+
+    /* Thumbnail styles */
+    .thumb-slider .swiper-item {
+      height: 80px;
+      font-size: 14px;
+      cursor: pointer;
+      opacity: 0.5;
+      transition: opacity 0.2s;
+    }
+
+    .thumb-slider .swiper-item.swiper-slide-thumb-active {
+      opacity: 1;
+    }
+
+    /* Vertical slider */
+    .vertical-slider .swiper-wrapper-el {
+      height: 300px;
+    }
+
+    .vertical-slider .swiper-item {
+      height: 100%;
+    }
+
+    /* Cards effect */
+    .cards-slider .swiper-wrapper-el {
+      overflow: visible;
+      padding: 20px 0;
+    }
+
+    /* Auto width slides */
+    .auto-width .swiper-item {
+      width: auto;
+      padding: 0 40px;
+    }
+
+    /* Custom active class demo */
+    .custom-active .swiper-item.my-active-slide {
+      box-shadow: 0 0 0 4px #333;
+      transform: scale(1.05);
+    }
+  </style>
+</head>
+<body>
+  <h1>SwiperFlow Test Page</h1>
+
+  <!-- Section 1: Basic Slider -->
+  <section>
+    <h2>1. Basic Slider</h2>
+    <p class="description">
+      Default configuration with navigation and pagination.<br>
+      <code>data-swf-component</code>
+    </p>
+    <div class="swiper-component" data-swf-component="basic-slider">
+      <div class="swiper-wrapper-el" data-swf-element="wrapper">
+        <div class="swiper-list" data-swf-element="list">
+          <div class="swiper-item" data-swf-element="item">1</div>
+          <div class="swiper-item" data-swf-element="item">2</div>
+          <div class="swiper-item" data-swf-element="item">3</div>
+          <div class="swiper-item" data-swf-element="item">4</div>
+          <div class="swiper-item" data-swf-element="item">5</div>
+        </div>
+      </div>
+      <div class="swiper-nav" data-swf-element="navigation">
+        <button class="swiper-arrow" data-swf-element="prev-arrow">&larr;</button>
+        <button class="swiper-arrow" data-swf-element="next-arrow">&rarr;</button>
+      </div>
+      <div class="swiper-pagination-el" data-swf-element="pagination">
+        <div class="swiper-dot" data-swf-element="pagination-dot"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 2: Multiple Slides Visible with Gap -->
+  <section>
+    <h2>2. Multiple Slides with Gap & Loop</h2>
+    <p class="description">
+      Shows 3 slides with 20px gap, loops infinitely.<br>
+      <code>data-swf-visible="3"</code> <code>data-swf-gap="20"</code> <code>data-swf-loop</code>
+    </p>
+    <div class="swiper-component" data-swf-component="multi-slide">
+      <div class="swiper-wrapper-el" data-swf-element="wrapper">
+        <div class="swiper-list" data-swf-element="list"
+             data-swf-visible="3"
+             data-swf-gap="20"
+             data-swf-loop
+             data-swf-additional="2">
+          <div class="swiper-item" data-swf-element="item">A</div>
+          <div class="swiper-item" data-swf-element="item">B</div>
+          <div class="swiper-item" data-swf-element="item">C</div>
+          <div class="swiper-item" data-swf-element="item">D</div>
+          <div class="swiper-item" data-swf-element="item">E</div>
+          <div class="swiper-item" data-swf-element="item">F</div>
+        </div>
+      </div>
+      <div class="swiper-nav" data-swf-element="navigation">
+        <button class="swiper-arrow" data-swf-element="prev-arrow">&larr;</button>
+        <button class="swiper-arrow" data-swf-element="next-arrow">&rarr;</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 3: Centered Slides -->
+  <section>
+    <h2>3. Centered Slides</h2>
+    <p class="description">
+      Active slide is centered, starts at slide 2 (index 1).<br>
+      <code>data-swf-centered</code> <code>data-swf-initial="1"</code> <code>data-swf-visible="2"</code>
+    </p>
+    <div class="swiper-component" data-swf-component="centered-slider">
+      <div class="swiper-wrapper-el" data-swf-element="wrapper">
+        <div class="swiper-list" data-swf-element="list"
+             data-swf-visible="2"
+             data-swf-gap="20"
+             data-swf-centered
+             data-swf-initial="1">
+          <div class="swiper-item" data-swf-element="item">1</div>
+          <div class="swiper-item" data-swf-element="item">2</div>
+          <div class="swiper-item" data-swf-element="item">3</div>
+          <div class="swiper-item" data-swf-element="item">4</div>
+          <div class="swiper-item" data-swf-element="item">5</div>
+        </div>
+      </div>
+      <div class="swiper-pagination-el" data-swf-element="pagination">
+        <div class="swiper-dot" data-swf-element="pagination-dot"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 4: Autoplay -->
+  <section>
+    <h2>4. Autoplay</h2>
+    <p class="description">
+      Auto-advances every 2 seconds with custom speed.<br>
+      <code>data-swf-autoplay</code> <code>data-swf-autoplay-delay="2000"</code> <code>data-swf-speed="800"</code>
+    </p>
+    <div class="swiper-component" data-swf-component="autoplay-slider">
+      <div class="swiper-wrapper-el" data-swf-element="wrapper">
+        <div class="swiper-list" data-swf-element="list"
+             data-swf-autoplay
+             data-swf-autoplay-delay="2000"
+             data-swf-speed="800"
+             data-swf-loop>
+          <div class="swiper-item" data-swf-element="item">Auto 1</div>
+          <div class="swiper-item" data-swf-element="item">Auto 2</div>
+          <div class="swiper-item" data-swf-element="item">Auto 3</div>
+          <div class="swiper-item" data-swf-element="item">Auto 4</div>
+        </div>
+      </div>
+      <div class="swiper-pagination-el" data-swf-element="pagination">
+        <div class="swiper-dot" data-swf-element="pagination-dot"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 5: Keyboard Navigation -->
+  <section>
+    <h2>5. Keyboard Navigation</h2>
+    <p class="description">
+      Use arrow keys or PageUp/PageDown when focused. Click to focus first.<br>
+      <code>data-swf-keyboard</code> <code>data-swf-keyboard-page-up-down="true"</code>
+    </p>
+    <div class="swiper-component" data-swf-component="keyboard-slider" tabindex="0" style="outline: none;">
+      <div class="swiper-wrapper-el" data-swf-element="wrapper">
+        <div class="swiper-list" data-swf-element="list"
+             data-swf-keyboard
+             data-swf-keyboard-only-in-viewport="true"
+             data-swf-keyboard-page-up-down="true"
+             data-swf-visible="3"
+             data-swf-gap="16">
+          <div class="swiper-item" data-swf-element="item">KB 1</div>
+          <div class="swiper-item" data-swf-element="item">KB 2</div>
+          <div class="swiper-item" data-swf-element="item">KB 3</div>
+          <div class="swiper-item" data-swf-element="item">KB 4</div>
+          <div class="swiper-item" data-swf-element="item">KB 5</div>
+          <div class="swiper-item" data-swf-element="item">KB 6</div>
+        </div>
+      </div>
+      <div class="swiper-nav" data-swf-element="navigation">
+        <button class="swiper-arrow" data-swf-element="prev-arrow">&larr;</button>
+        <button class="swiper-arrow" data-swf-element="next-arrow">&rarr;</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 6: Fade Effect -->
+  <section>
+    <h2>6. Fade Effect</h2>
+    <p class="description">
+      Crossfade transition between slides.<br>
+      <code>data-swf-effect="fade"</code>
+    </p>
+    <div class="swiper-component" data-swf-component="effect-slider">
+      <div class="swiper-wrapper-el" data-swf-element="wrapper">
+        <div class="swiper-list" data-swf-element="list"
+             data-swf-effect="fade"
+             data-swf-speed="600">
+          <div class="swiper-item" data-swf-element="item">Fade 1</div>
+          <div class="swiper-item" data-swf-element="item">Fade 2</div>
+          <div class="swiper-item" data-swf-element="item">Fade 3</div>
+        </div>
+      </div>
+      <div class="swiper-nav" data-swf-element="navigation">
+        <button class="swiper-arrow" data-swf-element="prev-arrow">&larr;</button>
+        <button class="swiper-arrow" data-swf-element="next-arrow">&rarr;</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 7: Cards Effect -->
+  <section>
+    <h2>7. Cards Effect</h2>
+    <p class="description">
+      3D card stack effect.<br>
+      <code>data-swf-effect="cards"</code>
+    </p>
+    <div class="swiper-component cards-slider" data-swf-component="effect-slider">
+      <div class="swiper-wrapper-el" data-swf-element="wrapper">
+        <div class="swiper-list" data-swf-element="list"
+             data-swf-effect="cards"
+             data-swf-grab="true">
+          <div class="swiper-item" data-swf-element="item">Card 1</div>
+          <div class="swiper-item" data-swf-element="item">Card 2</div>
+          <div class="swiper-item" data-swf-element="item">Card 3</div>
+          <div class="swiper-item" data-swf-element="item">Card 4</div>
+          <div class="swiper-item" data-swf-element="item">Card 5</div>
+        </div>
+      </div>
+      <div class="swiper-nav" data-swf-element="navigation">
+        <button class="swiper-arrow" data-swf-element="prev-arrow">&larr;</button>
+        <button class="swiper-arrow" data-swf-element="next-arrow">&rarr;</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 8: Creative Effect -->
+  <section>
+    <h2>8. Creative Effect</h2>
+    <p class="description">
+      Custom transform with scale and translate.<br>
+      <code>data-swf-effect="creative"</code>
+    </p>
+    <div class="swiper-component" data-swf-component="effect-slider">
+      <div class="swiper-wrapper-el" data-swf-element="wrapper">
+        <div class="swiper-list" data-swf-element="list"
+             data-swf-effect="creative"
+             data-swf-speed="500">
+          <div class="swiper-item" data-swf-element="item">Creative 1</div>
+          <div class="swiper-item" data-swf-element="item">Creative 2</div>
+          <div class="swiper-item" data-swf-element="item">Creative 3</div>
+          <div class="swiper-item" data-swf-element="item">Creative 4</div>
+        </div>
+      </div>
+      <div class="swiper-nav" data-swf-element="navigation">
+        <button class="swiper-arrow" data-swf-element="prev-arrow">&larr;</button>
+        <button class="swiper-arrow" data-swf-element="next-arrow">&rarr;</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 9: Creative Flat Effect -->
+  <section>
+    <h2>9. Creative Flat Effect</h2>
+    <p class="description">
+      Simplified creative effect without vertical translation.<br>
+      <code>data-swf-effect="creative-flat"</code>
+    </p>
+    <div class="swiper-component" data-swf-component="effect-slider">
+      <div class="swiper-wrapper-el" data-swf-element="wrapper">
+        <div class="swiper-list" data-swf-element="list"
+             data-swf-effect="creative-flat"
+             data-swf-speed="400">
+          <div class="swiper-item" data-swf-element="item">Flat 1</div>
+          <div class="swiper-item" data-swf-element="item">Flat 2</div>
+          <div class="swiper-item" data-swf-element="item">Flat 3</div>
+        </div>
+      </div>
+      <div class="swiper-nav" data-swf-element="navigation">
+        <button class="swiper-arrow" data-swf-element="prev-arrow">&larr;</button>
+        <button class="swiper-arrow" data-swf-element="next-arrow">&rarr;</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 10: Vertical Direction -->
+  <section>
+    <h2>10. Vertical Direction</h2>
+    <p class="description">
+      Slides move vertically instead of horizontally.<br>
+      <code>data-swf-direction="vertical"</code>
+    </p>
+    <div class="swiper-component vertical-slider" data-swf-component="vertical-slider">
+      <div class="swiper-wrapper-el" data-swf-element="wrapper">
+        <div class="swiper-list vertical" data-swf-element="list"
+             data-swf-direction="vertical"
+             data-swf-speed="400">
+          <div class="swiper-item" data-swf-element="item">Up 1</div>
+          <div class="swiper-item" data-swf-element="item">Up 2</div>
+          <div class="swiper-item" data-swf-element="item">Up 3</div>
+          <div class="swiper-item" data-swf-element="item">Up 4</div>
+        </div>
+      </div>
+      <div class="swiper-nav" data-swf-element="navigation">
+        <button class="swiper-arrow" data-swf-element="prev-arrow">&uarr;</button>
+        <button class="swiper-arrow" data-swf-element="next-arrow">&darr;</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 11: Custom Easing -->
+  <section>
+    <h2>11. Custom Easing</h2>
+    <p class="description">
+      Using cubic-bezier for custom timing function.<br>
+      <code>data-swf-ease="cubic-bezier(0.68, -0.55, 0.27, 1.55)"</code>
+    </p>
+    <div class="swiper-component" data-swf-component="easing-slider">
+      <div class="swiper-wrapper-el" data-swf-element="wrapper">
+        <div class="swiper-list" data-swf-element="list"
+             data-swf-ease="cubic-bezier(0.68, -0.55, 0.27, 1.55)"
+             data-swf-speed="600">
+          <div class="swiper-item" data-swf-element="item">Bounce 1</div>
+          <div class="swiper-item" data-swf-element="item">Bounce 2</div>
+          <div class="swiper-item" data-swf-element="item">Bounce 3</div>
+          <div class="swiper-item" data-swf-element="item">Bounce 4</div>
+        </div>
+      </div>
+      <div class="swiper-nav" data-swf-element="navigation">
+        <button class="swiper-arrow" data-swf-element="prev-arrow">&larr;</button>
+        <button class="swiper-arrow" data-swf-element="next-arrow">&rarr;</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 12: Custom Active Class -->
+  <section>
+    <h2>12. Custom Active Class</h2>
+    <p class="description">
+      Uses a custom class name for the active slide styling.<br>
+      <code>data-swf-active-class="my-active-slide"</code>
+    </p>
+    <div class="swiper-component custom-active" data-swf-component="custom-active-slider">
+      <div class="swiper-wrapper-el" data-swf-element="wrapper">
+        <div class="swiper-list" data-swf-element="list"
+             data-swf-active-class="my-active-slide"
+             data-swf-visible="3"
+             data-swf-gap="20"
+             data-swf-centered>
+          <div class="swiper-item" data-swf-element="item">Act 1</div>
+          <div class="swiper-item" data-swf-element="item">Act 2</div>
+          <div class="swiper-item" data-swf-element="item">Act 3</div>
+          <div class="swiper-item" data-swf-element="item">Act 4</div>
+          <div class="swiper-item" data-swf-element="item">Act 5</div>
+        </div>
+      </div>
+      <div class="swiper-nav" data-swf-element="navigation">
+        <button class="swiper-arrow" data-swf-element="prev-arrow">&larr;</button>
+        <button class="swiper-arrow" data-swf-element="next-arrow">&rarr;</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 13: Auto Width -->
+  <section>
+    <h2>13. Auto Width Slides</h2>
+    <p class="description">
+      Each slide takes its natural content width.<br>
+      <code>data-swf-visible="auto"</code>
+    </p>
+    <div class="swiper-component auto-width" data-swf-component="auto-width-slider">
+      <div class="swiper-wrapper-el" data-swf-element="wrapper">
+        <div class="swiper-list" data-swf-element="list"
+             data-swf-visible="auto"
+             data-swf-gap="16">
+          <div class="swiper-item" data-swf-element="item">Short</div>
+          <div class="swiper-item" data-swf-element="item">Medium Width</div>
+          <div class="swiper-item" data-swf-element="item">A Much Longer Slide</div>
+          <div class="swiper-item" data-swf-element="item">Tiny</div>
+          <div class="swiper-item" data-swf-element="item">Another One Here</div>
+        </div>
+      </div>
+      <div class="swiper-nav" data-swf-element="navigation">
+        <button class="swiper-arrow" data-swf-element="prev-arrow">&larr;</button>
+        <button class="swiper-arrow" data-swf-element="next-arrow">&rarr;</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 14: Responsive Breakpoints -->
+  <section>
+    <h2>14. Responsive Breakpoints</h2>
+    <p class="description">
+      4 slides on desktop, 2 on tablet, 1 on mobile. Resize window to test.<br>
+      <code>data-swf-visible="4"</code> <code>data-swf-bp-tablet="2"</code> <code>data-swf-bp-mobile="1"</code>
+    </p>
+    <div class="swiper-component" data-swf-component="responsive-slider">
+      <div class="swiper-wrapper-el" data-swf-element="wrapper">
+        <div class="swiper-list" data-swf-element="list"
+             data-swf-visible="4"
+             data-swf-bp-desktop="3"
+             data-swf-bp-tablet="2"
+             data-swf-bp-mobile="1"
+             data-swf-gap="16">
+          <div class="swiper-item" data-swf-element="item">Resp 1</div>
+          <div class="swiper-item" data-swf-element="item">Resp 2</div>
+          <div class="swiper-item" data-swf-element="item">Resp 3</div>
+          <div class="swiper-item" data-swf-element="item">Resp 4</div>
+          <div class="swiper-item" data-swf-element="item">Resp 5</div>
+          <div class="swiper-item" data-swf-element="item">Resp 6</div>
+          <div class="swiper-item" data-swf-element="item">Resp 7</div>
+          <div class="swiper-item" data-swf-element="item">Resp 8</div>
+        </div>
+      </div>
+      <div class="swiper-nav" data-swf-element="navigation">
+        <button class="swiper-arrow" data-swf-element="prev-arrow">&larr;</button>
+        <button class="swiper-arrow" data-swf-element="next-arrow">&rarr;</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 15: Touch Disabled -->
+  <section>
+    <h2>15. Touch/Swipe Disabled</h2>
+    <p class="description">
+      Can only navigate via arrows, no drag/swipe.<br>
+      <code>data-swf-swipe="false"</code> <code>data-swf-touch="false"</code> <code>data-swf-grab="false"</code>
+    </p>
+    <div class="swiper-component" data-swf-component="no-touch-slider">
+      <div class="swiper-wrapper-el" data-swf-element="wrapper">
+        <div class="swiper-list" data-swf-element="list"
+             data-swf-swipe="false"
+             data-swf-touch="false"
+             data-swf-grab="false"
+             data-swf-visible="2"
+             data-swf-gap="20">
+          <div class="swiper-item" data-swf-element="item">No Drag 1</div>
+          <div class="swiper-item" data-swf-element="item">No Drag 2</div>
+          <div class="swiper-item" data-swf-element="item">No Drag 3</div>
+          <div class="swiper-item" data-swf-element="item">No Drag 4</div>
+        </div>
+      </div>
+      <div class="swiper-nav" data-swf-element="navigation">
+        <button class="swiper-arrow" data-swf-element="prev-arrow">&larr;</button>
+        <button class="swiper-arrow" data-swf-element="next-arrow">&rarr;</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 16: Thumbs Gallery - First Instance -->
+  <section>
+    <h2>16. Thumbs Gallery (A)</h2>
+    <p class="description">
+      Main gallery linked to thumbnail slider below. Thumbs slider must be first in DOM.<br>
+      Main uses <code>data-swf-thumb-main</code>, both share <code>data-swf-thumb-id="gallery-a"</code>
+    </p>
+
+    <!-- Thumbnail Slider (MUST be first in DOM so it initializes before main) -->
+    <div class="swiper-component thumb-slider" data-swf-component="gallery-thumbs" style="margin-bottom: 16px;">
+      <div class="swiper-wrapper-el" data-swf-element="wrapper">
+        <div class="swiper-list" data-swf-element="list"
+             data-swf-thumb-id="gallery-a"
+             data-swf-visible="5"
+             data-swf-gap="10"
+             data-swf-centered>
+          <div class="swiper-item" data-swf-element="item">Thumb A-1</div>
+          <div class="swiper-item" data-swf-element="item">Thumb A-2</div>
+          <div class="swiper-item" data-swf-element="item">Thumb A-3</div>
+          <div class="swiper-item" data-swf-element="item">Thumb A-4</div>
+          <div class="swiper-item" data-swf-element="item">Thumb A-5</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Gallery (uses data-swf-thumb-main to mark as main slider) -->
+    <div class="swiper-component" data-swf-component="gallery-main">
+      <div class="swiper-wrapper-el" data-swf-element="wrapper">
+        <div class="swiper-list" data-swf-element="list"
+             data-swf-thumb-id="gallery-a"
+             data-swf-thumb-main
+             data-swf-effect="fade"
+             data-swf-speed="400">
+          <div class="swiper-item" data-swf-element="item">Gallery A-1</div>
+          <div class="swiper-item" data-swf-element="item">Gallery A-2</div>
+          <div class="swiper-item" data-swf-element="item">Gallery A-3</div>
+          <div class="swiper-item" data-swf-element="item">Gallery A-4</div>
+          <div class="swiper-item" data-swf-element="item">Gallery A-5</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 17: Second Thumbs Gallery (same component name) -->
+  <section>
+    <h2>17. Thumbs Gallery (B) - Same Component Structure</h2>
+    <p class="description">
+      Another gallery with thumbs. Thumbs first, then main with <code>data-swf-thumb-main</code> and <code>data-swf-thumb-id="gallery-b"</code>
+    </p>
+
+    <!-- Thumbnail Slider (MUST be first in DOM) -->
+    <div class="swiper-component thumb-slider" data-swf-component="gallery-thumbs" style="margin-bottom: 16px;">
+      <div class="swiper-wrapper-el" data-swf-element="wrapper">
+        <div class="swiper-list" data-swf-element="list"
+             data-swf-thumb-id="gallery-b"
+             data-swf-visible="4"
+             data-swf-gap="12">
+          <div class="swiper-item" data-swf-element="item">Thumb B-1</div>
+          <div class="swiper-item" data-swf-element="item">Thumb B-2</div>
+          <div class="swiper-item" data-swf-element="item">Thumb B-3</div>
+          <div class="swiper-item" data-swf-element="item">Thumb B-4</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Gallery -->
+    <div class="swiper-component" data-swf-component="gallery-main">
+      <div class="swiper-wrapper-el" data-swf-element="wrapper">
+        <div class="swiper-list" data-swf-element="list"
+             data-swf-thumb-id="gallery-b"
+             data-swf-thumb-main
+             data-swf-speed="500">
+          <div class="swiper-item" data-swf-element="item">Gallery B-1</div>
+          <div class="swiper-item" data-swf-element="item">Gallery B-2</div>
+          <div class="swiper-item" data-swf-element="item">Gallery B-3</div>
+          <div class="swiper-item" data-swf-element="item">Gallery B-4</div>
+        </div>
+      </div>
+      <div class="swiper-nav" data-swf-element="navigation">
+        <button class="swiper-arrow" data-swf-element="prev-arrow">&larr;</button>
+        <button class="swiper-arrow" data-swf-element="next-arrow">&rarr;</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 18: Multiple Same-Named Components -->
+  <section>
+    <h2>18. Multiple Identical Components</h2>
+    <p class="description">
+      Three sliders with identical configuration to test component isolation.
+    </p>
+
+    <div style="">
+      <!-- First identical slider -->
+      <div class="swiper-component" data-swf-component="box-slider">
+        <div class="swiper-wrapper-el" data-swf-element="wrapper">
+          <div class="swiper-list" data-swf-element="list"
+               data-swf-visible="1"
+               data-swf-loop>
+            <div class="swiper-item" data-swf-element="item" style="height: 120px; font-size: 16px;">Box 1-A</div>
+            <div class="swiper-item" data-swf-element="item" style="height: 120px; font-size: 16px;">Box 1-B</div>
+            <div class="swiper-item" data-swf-element="item" style="height: 120px; font-size: 16px;">Box 1-C</div>
+          </div>
+        </div>
+        <div class="swiper-nav" data-swf-element="navigation">
+          <button class="swiper-arrow" data-swf-element="prev-arrow" style="width: 30px; height: 30px; font-size: 14px;">&larr;</button>
+          <button class="swiper-arrow" data-swf-element="next-arrow" style="width: 30px; height: 30px; font-size: 14px;">&rarr;</button>
+        </div>
+      </div>
+
+      <!-- Second identical slider -->
+      <div class="swiper-component" data-swf-component="box-slider">
+        <div class="swiper-wrapper-el" data-swf-element="wrapper">
+          <div class="swiper-list" data-swf-element="list"
+               data-swf-visible="1"
+               data-swf-loop>
+            <div class="swiper-item" data-swf-element="item" style="height: 120px; font-size: 16px;">Box 2-A</div>
+            <div class="swiper-item" data-swf-element="item" style="height: 120px; font-size: 16px;">Box 2-B</div>
+            <div class="swiper-item" data-swf-element="item" style="height: 120px; font-size: 16px;">Box 2-C</div>
+          </div>
+        </div>
+        <div class="swiper-nav" data-swf-element="navigation">
+          <button class="swiper-arrow" data-swf-element="prev-arrow" style="width: 30px; height: 30px; font-size: 14px;">&larr;</button>
+          <button class="swiper-arrow" data-swf-element="next-arrow" style="width: 30px; height: 30px; font-size: 14px;">&rarr;</button>
+        </div>
+      </div>
+
+      <!-- Third identical slider -->
+      <div class="swiper-component" data-swf-component="box-slider">
+        <div class="swiper-wrapper-el" data-swf-element="wrapper">
+          <div class="swiper-list" data-swf-element="list"
+               data-swf-visible="1"
+               data-swf-loop>
+            <div class="swiper-item" data-swf-element="item" style="height: 120px; font-size: 16px;">Box 3-A</div>
+            <div class="swiper-item" data-swf-element="item" style="height: 120px; font-size: 16px;">Box 3-B</div>
+            <div class="swiper-item" data-swf-element="item" style="height: 120px; font-size: 16px;">Box 3-C</div>
+          </div>
+        </div>
+        <div class="swiper-nav" data-swf-element="navigation">
+          <button class="swiper-arrow" data-swf-element="prev-arrow" style="width: 30px; height: 30px; font-size: 14px;">&larr;</button>
+          <button class="swiper-arrow" data-swf-element="next-arrow" style="width: 30px; height: 30px; font-size: 14px;">&rarr;</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 19: Disabled Slider -->
+  <section>
+    <h2>19. Disabled Slider</h2>
+    <p class="description">
+      This slider should NOT initialize due to disabled flag.<br>
+      <code>data-swf-disabled</code>
+    </p>
+    <div class="swiper-component" data-swf-component="disabled-slider">
+      <div class="swiper-wrapper-el" data-swf-element="wrapper">
+        <div class="swiper-list" data-swf-element="list"
+             data-swf-disabled>
+          <div class="swiper-item" data-swf-element="item">Disabled 1</div>
+          <div class="swiper-item" data-swf-element="item">Disabled 2</div>
+          <div class="swiper-item" data-swf-element="item">Disabled 3</div>
+        </div>
+      </div>
+      <div class="swiper-nav" data-swf-element="navigation">
+        <button class="swiper-arrow" data-swf-element="prev-arrow">&larr;</button>
+        <button class="swiper-arrow" data-swf-element="next-arrow">&rarr;</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 20: Init on Desktop Only -->
+  <section>
+    <h2>20. Init on Desktop Only</h2>
+    <p class="description">
+      Only initializes on desktop (>991px). Resize to tablet/mobile to see it destroy.<br>
+      <code>data-swf-init="desktop"</code>
+    </p>
+    <div class="swiper-component" data-swf-component="desktop-only-slider">
+      <div class="swiper-wrapper-el" data-swf-element="wrapper">
+        <div class="swiper-list" data-swf-element="list"
+             data-swf-init="desktop"
+             data-swf-visible="3"
+             data-swf-gap="16">
+          <div class="swiper-item" data-swf-element="item">Desktop 1</div>
+          <div class="swiper-item" data-swf-element="item">Desktop 2</div>
+          <div class="swiper-item" data-swf-element="item">Desktop 3</div>
+          <div class="swiper-item" data-swf-element="item">Desktop 4</div>
+          <div class="swiper-item" data-swf-element="item">Desktop 5</div>
+        </div>
+      </div>
+      <div class="swiper-nav" data-swf-element="navigation">
+        <button class="swiper-arrow" data-swf-element="prev-arrow">&larr;</button>
+        <button class="swiper-arrow" data-swf-element="next-arrow">&rarr;</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 21: Init on Tablet and Mobile Only -->
+  <section>
+    <h2>21. Init on Tablet & Mobile Only</h2>
+    <p class="description">
+      Only initializes on tablet (569-991px) and mobile (&lt;568px). Desktop shows static content.<br>
+      <code>data-swf-init="tablet mobile"</code>
+    </p>
+    <div class="swiper-component" data-swf-component="tablet-mobile-slider">
+      <div class="swiper-wrapper-el" data-swf-element="wrapper">
+        <div class="swiper-list" data-swf-element="list"
+             data-swf-init="tablet mobile"
+             data-swf-visible="2"
+             data-swf-gap="12"
+             data-swf-bp-mobile="1">
+          <div class="swiper-item" data-swf-element="item">Tab/Mob 1</div>
+          <div class="swiper-item" data-swf-element="item">Tab/Mob 2</div>
+          <div class="swiper-item" data-swf-element="item">Tab/Mob 3</div>
+          <div class="swiper-item" data-swf-element="item">Tab/Mob 4</div>
+        </div>
+      </div>
+      <div class="swiper-nav" data-swf-element="navigation">
+        <button class="swiper-arrow" data-swf-element="prev-arrow">&larr;</button>
+        <button class="swiper-arrow" data-swf-element="next-arrow">&rarr;</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 22: Init on Mobile Only -->
+  <section>
+    <h2>22. Init on Mobile Only</h2>
+    <p class="description">
+      Only initializes on mobile (&lt;568px). Desktop and tablet show static content.<br>
+      <code>data-swf-init="mobile"</code>
+    </p>
+    <div class="swiper-component" data-swf-component="mobile-only-slider">
+      <div class="swiper-wrapper-el" data-swf-element="wrapper">
+        <div class="swiper-list" data-swf-element="list"
+             data-swf-init="mobile"
+             data-swf-visible="1"
+             data-swf-gap="8">
+          <div class="swiper-item" data-swf-element="item">Mobile 1</div>
+          <div class="swiper-item" data-swf-element="item">Mobile 2</div>
+          <div class="swiper-item" data-swf-element="item">Mobile 3</div>
+        </div>
+      </div>
+      <div class="swiper-pagination-el" data-swf-element="pagination">
+        <div class="swiper-dot" data-swf-element="pagination-dot"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 23: Kitchen Sink - All Features Combined -->
+  <section>
+    <h2>23. Kitchen Sink</h2>
+    <p class="description">
+      Multiple features combined: loop, autoplay, keyboard, centered, responsive, custom easing.
+    </p>
+    <div class="swiper-component" data-swf-component="kitchen-sink">
+      <div class="swiper-wrapper-el" data-swf-element="wrapper">
+        <div class="swiper-list" data-swf-element="list"
+             data-swf-visible="3"
+             data-swf-gap="24"
+             data-swf-loop
+             data-swf-additional="2"
+             data-swf-centered
+             data-swf-autoplay
+             data-swf-autoplay-delay="4000"
+             data-swf-keyboard
+             data-swf-speed="500"
+             data-swf-ease="ease-in-out"
+             data-swf-bp-tablet="2"
+             data-swf-bp-mobile="1"
+             data-swf-grab="true">
+          <div class="swiper-item" data-swf-element="item">All 1</div>
+          <div class="swiper-item" data-swf-element="item">All 2</div>
+          <div class="swiper-item" data-swf-element="item">All 3</div>
+          <div class="swiper-item" data-swf-element="item">All 4</div>
+          <div class="swiper-item" data-swf-element="item">All 5</div>
+          <div class="swiper-item" data-swf-element="item">All 6</div>
+          <div class="swiper-item" data-swf-element="item">All 7</div>
+          <div class="swiper-item" data-swf-element="item">All 8</div>
+        </div>
+      </div>
+      <div class="swiper-nav" data-swf-element="navigation">
+        <button class="swiper-arrow" data-swf-element="prev-arrow">&larr;</button>
+        <button class="swiper-arrow" data-swf-element="next-arrow">&rarr;</button>
+      </div>
+      <div class="swiper-pagination-el" data-swf-element="pagination">
+        <div class="swiper-dot" data-swf-element="pagination-dot"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Load Swiper and SwiperFlow -->
+<script defer src="https://cdn.jsdelivr.net/npm/@jamesbattye-dev/swiperflow@latest/dist/index.js"></script> 
+</body>
+</html>

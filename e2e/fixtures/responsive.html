@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Responsive Init</title>
+  <style>
+    .swiper-wrapper-el { overflow: hidden; }
+    .swiper-list { display: flex; }
+    .swiper-item { flex-shrink: 0; width: 100%; height: 100px; display: flex; align-items: center; justify-content: center; }
+    section { margin-bottom: 20px; }
+  </style>
+</head>
+<body>
+  <!-- Desktop-only slider -->
+  <section>
+    <div class="swiper-component" data-swf-component="desktop-only" id="desktop-only">
+      <div class="swiper-wrapper-el" data-swf-element="wrapper">
+        <div class="swiper-list" data-swf-element="list"
+             data-swf-init="desktop"
+             data-swf-speed="100">
+          <div class="swiper-item" data-swf-element="item">Desktop 1</div>
+          <div class="swiper-item" data-swf-element="item">Desktop 2</div>
+          <div class="swiper-item" data-swf-element="item">Desktop 3</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Mobile-only slider -->
+  <section>
+    <div class="swiper-component" data-swf-component="mobilePortrait-only" id="mobilePortrait-only">
+      <div class="swiper-wrapper-el" data-swf-element="wrapper">
+        <div class="swiper-list" data-swf-element="list"
+             data-swf-init="mobilePortrait"
+             data-swf-speed="100">
+          <div class="swiper-item" data-swf-element="item">Mobile 1</div>
+          <div class="swiper-item" data-swf-element="item">Mobile 2</div>
+          <div class="swiper-item" data-swf-element="item">Mobile 3</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Always-init slider -->
+  <section>
+    <div class="swiper-component" data-swf-component="always" id="always">
+      <div class="swiper-wrapper-el" data-swf-element="wrapper">
+        <div class="swiper-list" data-swf-element="list" data-swf-speed="100">
+          <div class="swiper-item" data-swf-element="item">Always 1</div>
+          <div class="swiper-item" data-swf-element="item">Always 2</div>
+          <div class="swiper-item" data-swf-element="item">Always 3</div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <script defer src="/dist/index.js"></script>
+</body>
+</html>
