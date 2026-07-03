@@ -1,6 +1,6 @@
-# Contributing to Yes Chef Sliders
+# Contributing to SwiperFlow
 
-Thank you for your interest in contributing to Yes Chef Sliders! We welcome contributions from the community to help improve and enhance the project.
+Thank you for your interest in contributing to SwiperFlow! We welcome contributions from the community to help improve and enhance the project.
 
 ## Getting Started
 
@@ -17,8 +17,8 @@ To get started with contributing, please follow these steps:
 
 To set up the development environment, follow these steps:
 
-1. Install the necessary dependencies by running `npm install` or `yarn install`.
-2. Start the development server with `npm run dev` or `yarn dev`.
+1. Install the necessary dependencies by running `pnpm install`.
+2. Start the development server with `pnpm dev`.
 3. Open your browser and navigate to `http://localhost:3000` to see the project running.
 
 ## Code Style and Guidelines
@@ -52,6 +52,6 @@ If you have an idea for a new feature or enhancement, please open an issue on th
 
 ## License
 
-By contributing to Yes Chef Sliders, you agree that your contributions will be licensed under the [MIT License](LICENSE).
+By contributing to SwiperFlow, you agree that your contributions will be licensed under the [MIT License](LICENSE).
 
 Thank you for your contributions and happy coding!

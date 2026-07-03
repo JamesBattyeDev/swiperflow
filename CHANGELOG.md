@@ -1,4 +1,4 @@
-# @yes-chef/yes-chef-sliders
+# @jamesbattye-dev/swiperflow
 
 ## 2.0.13
 

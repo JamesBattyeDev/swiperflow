@@ -1,48 +1,106 @@
-# YC-Sliders
+# SwiperFlow
 
-YC-Sliders is a customizable slider solution designed for use within Webflow. It allows developers to add custom attributes directly in Webflow to create fully customizable sliders with a wide range of configuration options.
+SwiperFlow is an attribute-based wrapper around [Swiper.js](https://swiperjs.com/) built for Webflow (and any other HTML-based workflow). It lets you configure fully-featured sliders entirely through `data-swf-*` HTML attributes — no JavaScript configuration required.
+
+Add the script, drop a few attributes onto your elements, and SwiperFlow handles initialization, responsive breakpoints, effects, autoplay, keyboard navigation, controller sync, and more.
 
 ## Features
 
-- Easy integration with Webflow
-- Customizable through custom attributes
-- Supports various slider effects and transitions
-- Responsive breakpoints for different screen sizes
-- Pagination and navigation options
-- Autoplay functionality
-- Accessibility support
-- Filtering and dynamic updates
+- **Zero-config JS** — everything is driven by `data-swf-*` attributes
+- **Webflow-friendly** — works with CMS collection lists and custom attributes
+- **Responsive** — per-breakpoint slides-per-view and gap, plus conditional initialization
+- **Effects** — fade, cards, and creative transforms
+- **Autoplay, keyboard, a11y** — built-in, opt-in via attributes
+- **Controller sync** — link two sliders together (e.g. main + thumbnails)
+- **JS API** — a `window.swiperflow` global for programmatic access and events
+- **Auto re-init on resize** — debounced re-initialization when the viewport changes
+
+## Install
+
+```bash
+npm install @jamesbattye-dev/swiperflow
+# or
+pnpm add @jamesbattye-dev/swiperflow
+```
+
+## Quick Start
+
+```html
+<!-- 1. Include the script -->
+<script defer src="https://unpkg.com/@jamesbattye-dev/swiperflow/dist/index.js"></script>
+
+<!-- 2. Add attributes to your markup -->
+<div data-swf-component="gallery">
+  <div data-swf-element="wrapper">
+    <div data-swf-element="list" data-swf-loop data-swf-speed="500" data-swf-visible="3" data-swf-gap="20">
+      <div data-swf-element="item">Slide 1</div>
+      <div data-swf-element="item">Slide 2</div>
+      <div data-swf-element="item">Slide 3</div>
+    </div>
+  </div>
+
+  <div data-swf-element="navigation">
+    <div data-swf-element="prev-arrow">←</div>
+    <div data-swf-element="next-arrow">→</div>
+  </div>
+
+  <div data-swf-element="pagination">
+    <div data-swf-element="pagination-dot"></div>
+  </div>
+</div>
+```
+
+That's it — SwiperFlow initializes automatically on `DOMContentLoaded`.
+
+## How It Works
+
+1. **Structure** — identify slider components with `data-swf-component` and roles with `data-swf-element`.
+2. **Configure** — add `data-swf-*` attributes to the **list** element to customize behavior.
+3. **Initialize** — SwiperFlow finds every `[data-swf-component]`, parses its attributes, and spins up Swiper.
+
+### Core Elements
+
+| Attribute                          | Role                                                              |
+| ---------------------------------- | ----------------------------------------------------------------- |
+| `data-swf-component`               | Main container. Optional value (e.g. `"gallery"`) names the slider for the JS API. |
+| `data-swf-element="wrapper"`       | Swiper wrapper (overflow container).                              |
+| `data-swf-element="list"`          | Slides container. **All configuration attributes go here.**       |
+| `data-swf-element="item"`          | Individual slide.                                                 |
+| `data-swf-element="navigation"`    | Optional. Container for prev/next arrows.                         |
+| `data-swf-element="prev-arrow"`    | Previous button (inside `navigation`).                            |
+| `data-swf-element="next-arrow"`    | Next button (inside `navigation`).                                |
+| `data-swf-element="pagination"`    | Optional. Pagination container.                                   |
+| `data-swf-element="pagination-dot"`| Required inside `pagination` for pagination to activate.          |
+
+> **CSS classes matter:** SwiperFlow derives Swiper's `wrapperClass` from the first class on your `list` element, and `slideClass` from the first class on your first `item`. Style your elements with classes as usual and they'll be picked up automatically.
 
 ## Documentation
 
-For detailed documentation and usage instructions, please visit our [Notion documentation](https://www.notion.so/yes-chef-studio/Overview-4c4da32c3159475bafeac11fc9abc0f0).
+Full attribute reference, examples, and the JS API are in [docs.md](./docs.md).
+
+## Development
+
+```bash
+pnpm install      # install dependencies
+pnpm dev          # build + serve with live reload on :3000
+pnpm build        # production build to dist/
+pnpm check        # type-check
+pnpm test:unit    # unit tests (vitest)
+pnpm test         # e2e tests (playwright)
+```
 
 ## Contributing
 
-We welcome contributions from the community! If you'd like to contribute to YC-Sliders, please follow these steps:
-
-1. Fork the repository
-2. Create a new branch for your feature or bug fix
-3. Make your changes and commit them with descriptive commit messages
-4. Push your changes to your forked repository
-5. Submit a pull request to the main repository
-
-Please ensure that your code follows the project's coding conventions and includes appropriate tests.
+Contributions are welcome — see [CONTRIBUTING.md](./CONTRIBUTING.md).
 
 ## License
 
-YC-Sliders is released under the [MIT License](LICENSE).
-
-## Support
-
-If you encounter any issues or have questions, please open an issue on GitHub. We'll do our best to assist you.
+[MIT](./LICENSE)
 
 ## Acknowledgements
 
-YC-Sliders is built on top of the Swiper library. We extend our gratitude to the Swiper team for their excellent work.
+SwiperFlow is built on top of the [Swiper](https://swiperjs.com/) library. Huge thanks to the Swiper team.
 
 ## Contributors
 
-- James Battye | https://yeschef.studio
-- Brandon Horvatic | https://yeschef.studio
-- Marc Andrews | https://marcandrews.io
+- James Battye — [jamesbattye.dev](https://jamesbattye.dev/)

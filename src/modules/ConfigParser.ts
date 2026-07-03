@@ -108,6 +108,10 @@ class ConfigParser {
       ],
       speed: parseInt(list.getAttribute(config.keyWithPrefix('speed')) || '') || 400,
       spaceBetween: parseInt(list.getAttribute(config.keyWithPrefix('gap')) || '') || 0,
+      slidesPerView: this.parseStringOrNumber(
+        list.getAttribute(config.keyWithPrefix('visible')),
+        1
+      ),
       loop: list.hasAttribute(config.keyWithPrefix('loop')),
       direction: directionParams,
       initialSlide: parseInt(list.getAttribute(config.keyWithPrefix('initial')) || '') || 0,

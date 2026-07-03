@@ -35,7 +35,7 @@
     "test:unit:watch": "vitest",
     "release": "changeset publish",
     "update": "pnpm update -i -L -r",
-    "launch": "git pull && pnpm changeset && git add . && git commit -m 'Automated changeset commit' && git push && echo 'Open Pull Requests: https://github.com/james-battye/yes-chef-sliders/pulls'"
+    "launch": "git pull && pnpm changeset && git add . && git commit -m 'Automated changeset commit' && git push && echo 'Open Pull Requests: https://github.com/JamesBattyeDev/swiperflow/pulls'"
   },
   "devDependencies": {
     "@changesets/changelog-git": "^0.1.14",
